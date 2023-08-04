@@ -1,18 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 
 public class Enemy : MonoBehaviour
 {
-
+    [SerializeField]NavMeshAgent navMeshAgent;
+    
     private int killCounter;
-    [SerializeField] Transform Ship;
+
     Vector3 moveDir;
+    private float playerAttackingRange;
+    private LayerMask playerLayerMask;
+    private float playerChasingRange;
+    private bool isPlayerInChasingRange;
+    private bool isPlayerInAttackingRange;
+
     // Start is called before the first frame update
     void Start()
     {
-        moveDir = Ship.transform.position - transform.position;
+        navMeshAgent = GetComponent<NavMeshAgent>();
+
+        moveDir = Ship.Instance.transform.position- transform.position;
+        transform.forward = Vector3.Slerp(transform.position, moveDir, 0.0001f);
 
 
     }
@@ -20,10 +31,20 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.forward = Vector3.Slerp(transform.position, moveDir, 4.0f);
+        isPlayerInChasingRange = Physics.CheckSphere(transform.position, playerChasingRange, playerLayerMask);
+        isPlayerInAttackingRange = Physics.CheckSphere(transform.position, playerAttackingRange, playerLayerMask);
+
+        if(!isPlayerInAttackingRange && !isPlayerInChasingRange)
+        {
+         
+            navMeshAgent.SetDestination(Ship.Instance.transform.position);
+        }
+        
+  
 
 
-        transform.position +=  moveDir *Time.deltaTime;
+
+
     }
 
     private void OnTriggerEnter(Collider other)
