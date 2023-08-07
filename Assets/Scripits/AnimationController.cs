@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,24 @@ public class AnimationController : MonoBehaviour
        playerAnimator= GetComponent<Animator>();
     }
     private void Update()
+    {
+
+        PlayerAnimationController();
+
+     
+
+
+       
+        
+
+
+
+
+
+    }
+
+
+    private void PlayerAnimationController()
     {
         if (Player.Instance.IsWalking())
         {
@@ -36,16 +55,5 @@ public class AnimationController : MonoBehaviour
             playerAnimator.SetBool("isBrustMode", ShootingController.Instance.IsBrustMode());
         }
 
-
-
-       
-        
-
-
-
-
-
     }
-
-
 }

@@ -11,7 +11,11 @@ public class BulletMovement : MonoBehaviour
     {
 
       bulletRigidBody=  transform.GetComponent<Rigidbody>();
+        
+
       bulletRigidBody.velocity = ShootingController.Instance.shootDir * bulletSpeed;
+        StartCoroutine(BulletDieTime());
+
 
         
     }
@@ -30,4 +34,14 @@ public class BulletMovement : MonoBehaviour
         }
 
     }
+
+
+
+
+    IEnumerator BulletDieTime()
+    {
+        yield return new WaitForSeconds(2.0f);
+        Destroy(transform.gameObject);
+    }
+ 
 }

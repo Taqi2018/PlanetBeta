@@ -1,11 +1,16 @@
 using System;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] public float hP;
 
 
-  
+
+
+
 
     public static Player Instance { private set; get; }
     private bool isPlayerSelected;
@@ -16,11 +21,15 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+
         Instance = this;
     }
+    
+
 
     private void Start()
     {
+    // Enemy.Instance.OnAttacKToPlayer += ReduceHp;
 
      EventGenrator.Instance.OnPlayerSelected += ActionOnPlayerSelected;
      EventGenrator.Instance.OnPlayerWalking += ActionOnPlayerWalkingEvent;
@@ -31,11 +40,36 @@ public class Player : MonoBehaviour
        isPlayerSelected = false;
     }
 
+    private void ReduceHp(object sender, EventArgs e)
+    {
+
+
+        Debug.Log("Hp Reduction!!");
+        hP = hP - 10;
+
+        GameOverCheck();
+
+    }
+
+   
+
+
+ 
+
+
+
+    private void GameOverCheck()
+    {
+        if (hP <= 0)
+        {
+            Debug.Log("GameOver");
+            Destroy(transform.gameObject);
+        }
+    }
 
 
     public void ActionOnPlayerSelected(object sender, EventArgs e)
     {
-        Debug.Log("playerhi00t");
         isPlayerSelected = true;
     }
 
@@ -99,4 +133,7 @@ public class Player : MonoBehaviour
     {
         return isPlayerSelected;
     }
+
+
+
 }
