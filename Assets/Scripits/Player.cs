@@ -40,16 +40,7 @@ public class Player : MonoBehaviour
        isPlayerSelected = false;
     }
 
-    private void ReduceHp(object sender, EventArgs e)
-    {
 
-
-        Debug.Log("Hp Reduction!!");
-        hP = hP - 10;
-
-        GameOverCheck();
-
-    }
 
    
 
@@ -58,14 +49,6 @@ public class Player : MonoBehaviour
 
 
 
-    private void GameOverCheck()
-    {
-        if (hP <= 0)
-        {
-            Debug.Log("GameOver");
-            Destroy(transform.gameObject);
-        }
-    }
 
 
     public void ActionOnPlayerSelected(object sender, EventArgs e)

@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
+using UnityEngine.SceneManagement;
+
 
 public class Enemy : MonoBehaviour
 {
@@ -22,6 +24,8 @@ public class Enemy : MonoBehaviour
     private Vector3 currentPosition;
     [SerializeField]private float attackDelay;
     [SerializeField]private float attackingRangeForShield;
+    int totalShieldParts;
+  
 
 
     // Start is called before the first frame update
@@ -33,7 +37,18 @@ public class Enemy : MonoBehaviour
         moveDir = Ship.Instance.transform.position- transform.position;
         transform.forward = Vector3.Slerp(transform.position, moveDir, 0.0001f);
 
+        ShiedDestructionEvent.Instance.OnDestructionOfLastPart += GameOver;
 
+        totalShieldParts = 31;
+     
+
+
+    }
+
+    private void GameOver(object sender, EventArgs e)
+    {
+        Debug.Log("gameovere");
+        //      SceneManager.LoadScene("GameOver");
     }
 
     // Update is called once per frame
@@ -156,9 +171,25 @@ public class Enemy : MonoBehaviour
 
     private void ReduceShipHp()
     {
-        int negShieldPartNoToDestory = ShieldGrower.Instance.ShieldPartNo();
-        Debug.Log(31 - negShieldPartNoToDestory);
-       ShieldGrower.Instance.transform.GetChild(0).GetChild(31- negShieldPartNoToDestory-1).gameObject.SetActive(false);
+       
+
+        for (int i = 30; i >= 0; i--)
+        {
+            Debug.Log(i);
+            Debug.Log(ShieldGrower.Instance.activeShieldParts[i]);
+           
+            GameObject shieldPart = ShieldGrower.Instance.activeShieldParts[i];
+            if (shieldPart.activeInHierarchy)
+            {
+                shieldPart.SetActive(false);
+                break;
+            }
+
+
+        }
+     
+        //   Debug.Log(ShieldGrower.Instance.shieldPartToActivate.name);
+        /*ShieldGrower.Instance.shieldPartToActivate.gameObject.SetActive(false);*/
         Debug.Log("shield.....,,,,,,,,,,,,,,,,");
     }
 
@@ -207,6 +238,8 @@ public class Enemy : MonoBehaviour
         if (Player.Instance.hP <= 0)
         {
             Debug.Log("GameOver");
+            SceneManager.LoadScene("GameOver");
+
             Destroy(transform.gameObject);
         }
     }

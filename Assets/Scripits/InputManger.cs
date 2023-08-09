@@ -108,6 +108,56 @@ public class InputManger : MonoBehaviour
     }
 
 
+    public void TapTriggerChangePositionEvent(InputAction.CallbackContext context)
+    {
+
+
+
+        if (context.started)
+        {
+            isTap = context.started;
+
+            position = playerInputActions.Player.TapPosition.ReadValue<Vector2>();
+            TapEventInputActionRequired?.Invoke(this, new onChangePositionEventArgs { position = position });
+
+        }
+
+        if (context.performed)
+        {
+
+            isHold = context.performed;
+            HoldEventInputActionRequired?.Invoke(this, EventArgs.Empty);
+        }
+        if (context.canceled)
+        {
+            isHold = false;
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //Only call once when we click tap
     void TapTriggerChangePositionEvent()
     {

@@ -6,11 +6,11 @@ using UnityEngine;
 public class ShieldGrower : MonoBehaviour
 {
     public static ShieldGrower Instance { get;private  set; }
-    Transform shieldPartToActivate;
+    public Transform shieldPartToActivate;
    [SerializeField] GameObject shield;
     [SerializeField] float shieldPartActivationDelay;
     private int shieldPartNo;
-
+    public List<GameObject>activeShieldParts;
     public int ShieldPartNo()
     {
         return shieldPartNo;
@@ -18,8 +18,11 @@ public class ShieldGrower : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        shieldPartNo = 0;
+        activeShieldParts = new List<GameObject>();
         Instance = this;
-   
+        LoadShieldParts();
+
         StartCoroutine(ShieldPartActivationDelay());
     }
 
@@ -36,11 +39,38 @@ public class ShieldGrower : MonoBehaviour
 
     private void ActivateShieldPart()
     {
-  
-        shieldPartToActivate = shield.transform.GetChild(31 - shieldPartNo);
-        shieldPartToActivate.gameObject.SetActive(true);
 
-        shieldPartNo++;
+     
+
+
+
+
+
+
+        foreach (GameObject part in activeShieldParts)
+        {
+
+            if (!part.activeInHierarchy)
+            {
+                Debug.Log(" ---"+part.name);
+                part.SetActive(true);
+                break;
+
+            }
+           
+        }
+        // shieldPartToActivate.gameObject.SetActive(true);
+
+    }
+
+    private void LoadShieldParts()
+    {
+       for(int i = 0; i <= 31; i++)
+        {
+            shieldPartToActivate = shield.transform.GetChild(31 - shieldPartNo);
+            activeShieldParts.Add(shieldPartToActivate.gameObject);
+            shieldPartNo++;
+        }
     }
 
     // Update is called once per frame
