@@ -55,30 +55,30 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""TapCheck"",
-                    ""type"": ""Button"",
-                    ""id"": ""651ae232-e9bc-4d46-927f-f943b5cb51e3"",
-                    ""expectedControlType"": ""Button"",
+                    ""name"": ""TouchInput"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""cbfbccb5-6e38-4cbe-9cec-9ccd369c20c1"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""TapPosition"",
-                    ""type"": ""Value"",
-                    ""id"": ""ab148b1f-3023-458c-9024-5b4284afbd20"",
+                    ""name"": ""TouchPress"",
+                    ""type"": ""Button"",
+                    ""id"": ""8c16c993-dcb7-4736-a9d7-9633cb32cf1f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TouchPosition"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""c811930f-d351-4842-8f09-6d30fbb035d5"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""MouseClickHold"",
-                    ""type"": ""Button"",
-                    ""id"": ""c15501c8-ffdc-4df7-8709-5b583ee1bb8f"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Hold"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -173,34 +173,34 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f382b447-9f89-404d-b306-93c72e88693d"",
-                    ""path"": ""<Touchscreen>/Press"",
+                    ""id"": ""b759d2b5-549a-42cc-9e7d-fcfa3d0c3c61"",
+                    ""path"": ""<Touchscreen>/primaryTouch"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""TapCheck"",
+                    ""action"": ""TouchInput"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c2f74a74-b71e-4cd6-99d9-a60be4a656da"",
-                    ""path"": ""<Touchscreen>/touch0/position"",
-                    ""interactions"": """",
+                    ""id"": ""f6310f99-0a91-4e1d-b8f9-ae06f34a4483"",
+                    ""path"": ""<Touchscreen>/primaryTouch/press"",
+                    ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""TapPosition"",
+                    ""action"": ""TouchPress"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7bc49914-e535-49fe-a9d6-168ce767dcda"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""id"": ""4b244e6a-df4a-477b-a8a4-4e790b721848"",
+                    ""path"": ""<Touchscreen>/primaryTouch/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MouseClickHold"",
+                    ""action"": ""TouchPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -214,9 +214,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_MouseClick = m_Player.FindAction("MouseClick", throwIfNotFound: true);
         m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
-        m_Player_TapCheck = m_Player.FindAction("TapCheck", throwIfNotFound: true);
-        m_Player_TapPosition = m_Player.FindAction("TapPosition", throwIfNotFound: true);
-        m_Player_MouseClickHold = m_Player.FindAction("MouseClickHold", throwIfNotFound: true);
+        m_Player_TouchInput = m_Player.FindAction("TouchInput", throwIfNotFound: true);
+        m_Player_TouchPress = m_Player.FindAction("TouchPress", throwIfNotFound: true);
+        m_Player_TouchPosition = m_Player.FindAction("TouchPosition", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -281,9 +281,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_MouseClick;
     private readonly InputAction m_Player_MousePosition;
-    private readonly InputAction m_Player_TapCheck;
-    private readonly InputAction m_Player_TapPosition;
-    private readonly InputAction m_Player_MouseClickHold;
+    private readonly InputAction m_Player_TouchInput;
+    private readonly InputAction m_Player_TouchPress;
+    private readonly InputAction m_Player_TouchPosition;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -291,9 +291,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @MouseClick => m_Wrapper.m_Player_MouseClick;
         public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
-        public InputAction @TapCheck => m_Wrapper.m_Player_TapCheck;
-        public InputAction @TapPosition => m_Wrapper.m_Player_TapPosition;
-        public InputAction @MouseClickHold => m_Wrapper.m_Player_MouseClickHold;
+        public InputAction @TouchInput => m_Wrapper.m_Player_TouchInput;
+        public InputAction @TouchPress => m_Wrapper.m_Player_TouchPress;
+        public InputAction @TouchPosition => m_Wrapper.m_Player_TouchPosition;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -312,15 +312,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @MousePosition.started += instance.OnMousePosition;
             @MousePosition.performed += instance.OnMousePosition;
             @MousePosition.canceled += instance.OnMousePosition;
-            @TapCheck.started += instance.OnTapCheck;
-            @TapCheck.performed += instance.OnTapCheck;
-            @TapCheck.canceled += instance.OnTapCheck;
-            @TapPosition.started += instance.OnTapPosition;
-            @TapPosition.performed += instance.OnTapPosition;
-            @TapPosition.canceled += instance.OnTapPosition;
-            @MouseClickHold.started += instance.OnMouseClickHold;
-            @MouseClickHold.performed += instance.OnMouseClickHold;
-            @MouseClickHold.canceled += instance.OnMouseClickHold;
+            @TouchInput.started += instance.OnTouchInput;
+            @TouchInput.performed += instance.OnTouchInput;
+            @TouchInput.canceled += instance.OnTouchInput;
+            @TouchPress.started += instance.OnTouchPress;
+            @TouchPress.performed += instance.OnTouchPress;
+            @TouchPress.canceled += instance.OnTouchPress;
+            @TouchPosition.started += instance.OnTouchPosition;
+            @TouchPosition.performed += instance.OnTouchPosition;
+            @TouchPosition.canceled += instance.OnTouchPosition;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -334,15 +334,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @MousePosition.started -= instance.OnMousePosition;
             @MousePosition.performed -= instance.OnMousePosition;
             @MousePosition.canceled -= instance.OnMousePosition;
-            @TapCheck.started -= instance.OnTapCheck;
-            @TapCheck.performed -= instance.OnTapCheck;
-            @TapCheck.canceled -= instance.OnTapCheck;
-            @TapPosition.started -= instance.OnTapPosition;
-            @TapPosition.performed -= instance.OnTapPosition;
-            @TapPosition.canceled -= instance.OnTapPosition;
-            @MouseClickHold.started -= instance.OnMouseClickHold;
-            @MouseClickHold.performed -= instance.OnMouseClickHold;
-            @MouseClickHold.canceled -= instance.OnMouseClickHold;
+            @TouchInput.started -= instance.OnTouchInput;
+            @TouchInput.performed -= instance.OnTouchInput;
+            @TouchInput.canceled -= instance.OnTouchInput;
+            @TouchPress.started -= instance.OnTouchPress;
+            @TouchPress.performed -= instance.OnTouchPress;
+            @TouchPress.canceled -= instance.OnTouchPress;
+            @TouchPosition.started -= instance.OnTouchPosition;
+            @TouchPosition.performed -= instance.OnTouchPosition;
+            @TouchPosition.canceled -= instance.OnTouchPosition;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -365,8 +365,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnMouseClick(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
-        void OnTapCheck(InputAction.CallbackContext context);
-        void OnTapPosition(InputAction.CallbackContext context);
-        void OnMouseClickHold(InputAction.CallbackContext context);
+        void OnTouchInput(InputAction.CallbackContext context);
+        void OnTouchPress(InputAction.CallbackContext context);
+        void OnTouchPosition(InputAction.CallbackContext context);
     }
 }

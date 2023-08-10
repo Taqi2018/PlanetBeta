@@ -93,7 +93,7 @@ public class ShootingController : MonoBehaviour
                 
                 
                 Instantiate(bullerPrefab, shootingPoint.position, Quaternion.LookRotation(shootDir, Vector3.up));
-                Debug.Log("Single Mode");
+          
 
                 OnSingleShootPerformedByPlayer.Invoke(this, EventArgs.Empty);
 
@@ -104,7 +104,7 @@ public class ShootingController : MonoBehaviour
                 isBrustMode = true;
                 //isSingleMode = false;
                 Instantiate(bullerPrefab, shootingPoint.position, Quaternion.LookRotation(shootDir,Vector3.up) );
-                Debug.Log("Brust Mode");
+        
 
                 
             }

@@ -33,30 +33,30 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "TapCheck",
-                    "type": "Button",
-                    "id": "651ae232-e9bc-4d46-927f-f943b5cb51e3",
-                    "expectedControlType": "Button",
+                    "name": "TouchInput",
+                    "type": "PassThrough",
+                    "id": "cbfbccb5-6e38-4cbe-9cec-9ccd369c20c1",
+                    "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "TapPosition",
-                    "type": "Value",
-                    "id": "ab148b1f-3023-458c-9024-5b4284afbd20",
+                    "name": "TouchPress",
+                    "type": "Button",
+                    "id": "8c16c993-dcb7-4736-a9d7-9633cb32cf1f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TouchPosition",
+                    "type": "PassThrough",
+                    "id": "c811930f-d351-4842-8f09-6d30fbb035d5",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "MouseClickHold",
-                    "type": "Button",
-                    "id": "c15501c8-ffdc-4df7-8709-5b583ee1bb8f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Hold",
                     "initialStateCheck": false
                 }
             ],
@@ -151,34 +151,34 @@
                 },
                 {
                     "name": "",
-                    "id": "f382b447-9f89-404d-b306-93c72e88693d",
-                    "path": "<Touchscreen>/Press",
+                    "id": "b759d2b5-549a-42cc-9e7d-fcfa3d0c3c61",
+                    "path": "<Touchscreen>/primaryTouch",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "TapCheck",
+                    "action": "TouchInput",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "c2f74a74-b71e-4cd6-99d9-a60be4a656da",
-                    "path": "<Touchscreen>/touch0/position",
-                    "interactions": "",
+                    "id": "f6310f99-0a91-4e1d-b8f9-ae06f34a4483",
+                    "path": "<Touchscreen>/primaryTouch/press",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "",
-                    "action": "TapPosition",
+                    "action": "TouchPress",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "7bc49914-e535-49fe-a9d6-168ce767dcda",
-                    "path": "<Mouse>/leftButton",
+                    "id": "4b244e6a-df4a-477b-a8a4-4e790b721848",
+                    "path": "<Touchscreen>/primaryTouch/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MouseClickHold",
+                    "action": "TouchPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

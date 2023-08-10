@@ -28,6 +28,7 @@ public class BulletMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        
         if (other.TryGetComponent(out Enemy enemy))
         {
             Destroy(transform.gameObject);

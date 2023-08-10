@@ -33,8 +33,7 @@ public class Player : MonoBehaviour
 
      EventGenrator.Instance.OnPlayerSelected += ActionOnPlayerSelected;
      EventGenrator.Instance.OnPlayerWalking += ActionOnPlayerWalkingEvent;
-     //
-       EventGenrator.Instance.OnEnemyTarget += ActionOnEnemyTargetEvent;
+     EventGenrator.Instance.OnEnemyTarget += ActionOnEnemyTargetEvent;
 
        isWalking = false;
        isPlayerSelected = false;
@@ -68,7 +67,7 @@ public class Player : MonoBehaviour
     {
         isWalking = false;
 
-            transform.forward = Vector3.Slerp(transform.position, e.OnEnemyTargetPoint - transform.position, playerRotationSpeed);
+        transform.forward = Vector3.Slerp(transform.position, e.OnEnemyTargetPoint - transform.position, playerRotationSpeed);
 
     }
 

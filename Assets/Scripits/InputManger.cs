@@ -13,7 +13,7 @@ public class InputManger : MonoBehaviour
     public event EventHandler <onChangePositionEventArgs>TapEventInputActionRequired;
 
 
-    public event EventHandler HoldEventInputActionRequired;
+
 
     Vector2 position;
 
@@ -36,8 +36,9 @@ public class InputManger : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField]Camera cam;
     [SerializeField] float singleTapDelay;
-    Vector3 previousPosition;
+    Vector3 currentPosition;
     private  bool isTap;
+    private Vector2 tapPosition;
     private bool isHold;
 
     private void Awake()
@@ -46,12 +47,6 @@ public class InputManger : MonoBehaviour
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
 
-        //playerInputActions.Player.MouseClick.performed += _ => MouseTriggerChangePositionEvent();
-
-        // playerInputActions.Player.MouseClick.started  += _ => MouseTriggerChangePositionEvent();
-        //   playerInputActions.Player.MouseClick.performed += _ => MouseTriggerChangePositionEvent();
-        // playerInputActions.Player.MouseClick.canceled += _ => MouseTriggerChangePositionEvent();
-        // playerInputActions.Player.TapCheck.performed   += _ => TapTriggerChangePositionEvent();
 
 
     }
@@ -59,6 +54,7 @@ public class InputManger : MonoBehaviour
     private void Start()
     {
         ShootingController.Instance.OnSingleShootPerformedByPlayer += ActionOnSingleShoot;
+        currentPosition = new Vector3(0, 0, 0);
     }
 
     private void ActionOnSingleShoot(object sender, EventArgs e)
@@ -66,7 +62,7 @@ public class InputManger : MonoBehaviour
 
 
         isTap = false;
-        //StartCoroutine(SingleTapDelay());
+
         
         
     }
@@ -75,29 +71,29 @@ public class InputManger : MonoBehaviour
     {
 
         yield return new WaitForSeconds(singleTapDelay);
-        //isTap = false;
-    }
 
+    }
+/*
     //Only call once when we click mouse 
     public void MouseTriggerChangePositionEvent(InputAction.CallbackContext context)
     {
 
 
-     
+
         if (context.started)
         {
             isTap = context.started;
 
             position = playerInputActions.Player.MousePosition.ReadValue<Vector2>();
             TapEventInputActionRequired?.Invoke(this, new onChangePositionEventArgs { position = position });
-            
+
         }
 
         if (context.performed)
         {
-            
+
             isHold = context.performed;
-            HoldEventInputActionRequired?.Invoke(this, EventArgs.Empty);
+
         }
         if (context.canceled)
         {
@@ -106,27 +102,30 @@ public class InputManger : MonoBehaviour
 
 
     }
-
+*/
 
     public void TapTriggerChangePositionEvent(InputAction.CallbackContext context)
     {
 
 
+        Debug.Log("hi");
 
         if (context.started)
         {
             isTap = context.started;
 
-            position = playerInputActions.Player.TapPosition.ReadValue<Vector2>();
-            TapEventInputActionRequired?.Invoke(this, new onChangePositionEventArgs { position = position });
 
+            tapPosition = playerInputActions.Player.TouchPosition.ReadValue<Vector2>();
+            Debug.Log(tapPosition);
+            TapEventInputActionRequired?.Invoke(this, new onChangePositionEventArgs { position = tapPosition });
+      
         }
 
         if (context.performed)
         {
 
             isHold = context.performed;
-            HoldEventInputActionRequired?.Invoke(this, EventArgs.Empty);
+
         }
         if (context.canceled)
         {
@@ -148,23 +147,6 @@ public class InputManger : MonoBehaviour
 
 
 
-
-
-
-
-
-
-
-
-
-
-    //Only call once when we click tap
-    void TapTriggerChangePositionEvent()
-    {
-        position = playerInputActions.Player.TapPosition.ReadValue<Vector2>();
-        TapEventInputActionRequired?.Invoke(this, new onChangePositionEventArgs { position = position });
-
-    }
 
 
 

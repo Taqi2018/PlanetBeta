@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
-    public event EventHandler OnAttacKToPlayer;
+ 
     public static Enemy Instance { get; private set; }
     [SerializeField]NavMeshAgent navMeshAgent;
     
@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
     private Vector3 currentPosition;
     [SerializeField]private float attackDelay;
     [SerializeField]private float attackingRangeForShield;
-    int totalShieldParts;
+
   
 
 
@@ -39,8 +39,7 @@ public class Enemy : MonoBehaviour
 
         ShiedDestructionEvent.Instance.OnDestructionOfLastPart += GameOver;
 
-        totalShieldParts = 31;
-     
+  
 
 
     }
@@ -61,7 +60,7 @@ public class Enemy : MonoBehaviour
         if (!isPlayerInChasingRangeOfScorpian)
         {
             ShipInteractionHandeling();
-          
+
         }
 
 
@@ -171,13 +170,12 @@ public class Enemy : MonoBehaviour
 
     private void ReduceShipHp()
     {
-       
+
 
         for (int i = 30; i >= 0; i--)
         {
-            Debug.Log(i);
-            Debug.Log(ShieldGrower.Instance.activeShieldParts[i]);
-           
+
+
             GameObject shieldPart = ShieldGrower.Instance.activeShieldParts[i];
             if (shieldPart.activeInHierarchy)
             {
@@ -187,15 +185,15 @@ public class Enemy : MonoBehaviour
 
 
         }
-     
+
         //   Debug.Log(ShieldGrower.Instance.shieldPartToActivate.name);
         /*ShieldGrower.Instance.shieldPartToActivate.gameObject.SetActive(false);*/
-        Debug.Log("shield.....,,,,,,,,,,,,,,,,");
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("--------");
+  
         if (other.TryGetComponent(out BulletMovement bullet))
         {
 
@@ -224,7 +222,6 @@ public class Enemy : MonoBehaviour
     {
 
 
-        Debug.Log("Hp Reduction!!");
         Player.Instance.hP = Player.Instance.hP - 10;
 
         GameOverCheck();

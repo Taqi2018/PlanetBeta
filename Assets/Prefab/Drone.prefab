@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4787491560835417715}
-  - component: {fileID: 5221518200606157026}
   - component: {fileID: 6897663230165007375}
   - component: {fileID: -2786347463530397519}
   - component: {fileID: 2854283667498577042}
@@ -29,25 +28,13 @@ Transform:
   m_GameObject: {fileID: 4787491560835417716}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.13, y: 5.87953, z: -0.32558203}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4787491562052358589}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5221518200606157026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4787491560835417716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6136671a65b693479f244d216b4a65b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6897663230165007375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,6 +54,7 @@ MonoBehaviour:
     m_Bits: 8
   playerChasingRange: 0
   attackDelay: 1
+  attackingRangeForShield: 0
 --- !u!65 &-2786347463530397519
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -99,7 +87,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 2
+  m_BaseOffset: 2.4
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!1001 &4787491562051963711

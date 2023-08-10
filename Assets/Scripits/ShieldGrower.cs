@@ -52,7 +52,7 @@ public class ShieldGrower : MonoBehaviour
 
             if (!part.activeInHierarchy)
             {
-                Debug.Log(" ---"+part.name);
+             
                 part.SetActive(true);
                 break;
 

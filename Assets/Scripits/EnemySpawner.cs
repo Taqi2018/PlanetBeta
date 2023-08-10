@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] Transform smallGreenScorpians;
     [SerializeField] Transform floor;
-    [SerializeField]Transform drone;
+    [SerializeField]Transform alien;
 
 
     // Start is called before the first frame update
@@ -15,6 +15,40 @@ public class EnemySpawner : MonoBehaviour
     {
        LoopTheScorpianSpawn();
         LoopTheDroneSpawn();
+        LoopTheAlienGroup();
+    }
+
+    private void LoopTheAlienGroup()
+    {
+        StartCoroutine(RandomAlienGroupSpawnTimer());
+    }
+
+    private IEnumerator RandomAlienGroupSpawnTimer()
+    {
+
+        int randomDroneGroupSpwanTime = UnityEngine.Random.Range(20, 30);
+        yield return new WaitForSeconds(randomDroneGroupSpwanTime);
+        Debug.Log("Hi dron coming..");
+        SpawnAlienGroup();
+  
+        LoopTheAlienGroup();
+
+    }
+
+    private void SpawnAlienGroup()
+    {
+        int HowManyDrones = UnityEngine.Random.Range(2, 3);
+        Vector3 SpawnAreaVector = GetRandomSpawnVector();
+        Vector3[] SpawnVectorsByIndex;
+        SpawnVectorsByIndex = new Vector3[HowManyDrones];
+        Vector3 singleDronePosition;
+
+        for (int i = 0; i < HowManyDrones; i++)
+        {
+            singleDronePosition = new Vector3(SpawnAreaVector.x + VariationInSpawnPosition(), 5, SpawnAreaVector.z + VariationInSpawnPosition());
+            Instantiate(alien, singleDronePosition, Quaternion.identity);
+        }
+
     }
 
     private void LoopTheScorpianSpawn()
@@ -58,7 +92,7 @@ public class EnemySpawner : MonoBehaviour
         for(int i = 0; i < HowManyDrones; i++)
         {
             singleDronePosition = new Vector3(SpawnAreaVector.x + VariationInSpawnPosition(), 5, SpawnAreaVector.z + VariationInSpawnPosition()) ;
-            Instantiate(drone, singleDronePosition, Quaternion.identity);
+            Instantiate(alien, singleDronePosition, Quaternion.identity);
         }
 
    
@@ -81,7 +115,7 @@ public class EnemySpawner : MonoBehaviour
     {
         int randomScorpianSpwanTime = UnityEngine.Random.Range(5, 10);
         yield return new WaitForSeconds(randomScorpianSpwanTime);
-        Debug.Log("Hi I am coming..");
+
         SpwanGreenScorpian();
         LoopTheScorpianSpawn();
 
