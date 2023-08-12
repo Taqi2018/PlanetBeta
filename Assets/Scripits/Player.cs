@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     public static Player Instance { private set; get; }
     private bool isPlayerSelected;
     private bool isWalking;
-    private Vector3 targetPosition;
+    private Vector3 movementVector2d;
 
     [SerializeField] float playerSpeed, playerRotationSpeed;
 
@@ -29,22 +29,73 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-    // Enemy.Instance.OnAttacKToPlayer += ReduceHp;
 
-     EventGenrator.Instance.OnPlayerSelected += ActionOnPlayerSelected;
+
+
      EventGenrator.Instance.OnPlayerWalking += ActionOnPlayerWalkingEvent;
-     EventGenrator.Instance.OnEnemyTarget += ActionOnEnemyTargetEvent;
+        TargetRange.Instance.OnEnemyInTarget += ActionOnEnemyTargetEvent;
+   
 
        isWalking = false;
        isPlayerSelected = false;
     }
 
 
+    private void ActionOnPlayerWalkingEvent(object sender, EventGenrator.OnPlayerWalkingEventArgs e)
+    {
 
-   
+
+        if (Vector2.Equals(e.inputVector, Vector2.zero))
+        {
+            Debug.Log(e.inputVector);
+            isWalking = false;
+        }
+        else
+        {
+
+            isWalking = true;
+            movementVector2d = e.inputVector;
+        }
 
 
- 
+    }
+
+
+    void Update()
+    {
+
+        MovementHandler();
+
+    }
+
+    private void MovementHandler()
+    {
+        if (isWalking)
+        {
+            Walking();
+        }
+
+    }
+
+    private void Walking()
+    {
+
+        Vector3 playerMovement3dVec = new Vector3(movementVector2d.x, 0f, movementVector2d.y);
+
+        transform.position += playerMovement3dVec * Time.deltaTime * playerSpeed;
+
+        transform.forward = Vector3.Slerp(transform.forward, playerMovement3dVec, playerRotationSpeed * Time.deltaTime);
+
+    }
+
+
+    public bool IsWalking()
+    {
+        return isWalking;
+    }
+
+
+
 
 
 
@@ -56,59 +107,20 @@ public class Player : MonoBehaviour
     }
 
 
-    private void ActionOnPlayerWalkingEvent(object sender, EventGenrator.OnPlayerWalkingEventArgs e)
-    {
-        isWalking = true;
-        targetPosition = e.PlayerWalkToPoint;
-    }
 
 
-    private void ActionOnEnemyTargetEvent(object sender, EventGenrator.OnEnemyTargetEventArgs e)
+    private void ActionOnEnemyTargetEvent(object sender, TargetRange.OnEnemyInTargetEventArgs e)
     {
         isWalking = false;
 
-        transform.forward = Vector3.Slerp(transform.position, e.OnEnemyTargetPoint - transform.position, playerRotationSpeed);
+        transform.forward = Vector3.Slerp(transform.position, e.enemyPosition - transform.position, playerRotationSpeed);
 
     }
 
 
  
 
-    void Update()
-    {
 
-        MovementHandler();
-
-    }
-
-
-
-    private void MovementHandler()
-    {
-        if (isWalking)
-        {
-            WalkToTargetPosition();
-        }
-
-    }
-
-    private void WalkToTargetPosition()
-    {
-    
-        Vector3 playerDirection = targetPosition - transform.position;
-        transform.forward = Vector3.Slerp(transform.forward, playerDirection, playerRotationSpeed * Time.deltaTime);
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, playerSpeed * Time.deltaTime);
-        if (transform.position == targetPosition)
-        {
-            isWalking = false;
-        }
-    }
-
-
-    public bool IsWalking()
-    {
-        return isWalking;
-    }
 
 
     public bool IsPlayerSelected()

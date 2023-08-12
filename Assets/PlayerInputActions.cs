@@ -80,6 +80,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""JoyStick"",
+                    ""type"": ""Value"",
+                    ""id"": ""f116433c-cce5-4d56-bc77-a5b322d8b0c4"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -203,6 +212,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""TouchPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4a311ea3-1216-4d7a-90a6-28538bf2e040"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""JoyStick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -217,6 +237,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_TouchInput = m_Player.FindAction("TouchInput", throwIfNotFound: true);
         m_Player_TouchPress = m_Player.FindAction("TouchPress", throwIfNotFound: true);
         m_Player_TouchPosition = m_Player.FindAction("TouchPosition", throwIfNotFound: true);
+        m_Player_JoyStick = m_Player.FindAction("JoyStick", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -284,6 +305,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_TouchInput;
     private readonly InputAction m_Player_TouchPress;
     private readonly InputAction m_Player_TouchPosition;
+    private readonly InputAction m_Player_JoyStick;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -294,6 +316,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @TouchInput => m_Wrapper.m_Player_TouchInput;
         public InputAction @TouchPress => m_Wrapper.m_Player_TouchPress;
         public InputAction @TouchPosition => m_Wrapper.m_Player_TouchPosition;
+        public InputAction @JoyStick => m_Wrapper.m_Player_JoyStick;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -321,6 +344,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @TouchPosition.started += instance.OnTouchPosition;
             @TouchPosition.performed += instance.OnTouchPosition;
             @TouchPosition.canceled += instance.OnTouchPosition;
+            @JoyStick.started += instance.OnJoyStick;
+            @JoyStick.performed += instance.OnJoyStick;
+            @JoyStick.canceled += instance.OnJoyStick;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -343,6 +369,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @TouchPosition.started -= instance.OnTouchPosition;
             @TouchPosition.performed -= instance.OnTouchPosition;
             @TouchPosition.canceled -= instance.OnTouchPosition;
+            @JoyStick.started -= instance.OnJoyStick;
+            @JoyStick.performed -= instance.OnJoyStick;
+            @JoyStick.canceled -= instance.OnJoyStick;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -368,5 +397,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnTouchInput(InputAction.CallbackContext context);
         void OnTouchPress(InputAction.CallbackContext context);
         void OnTouchPosition(InputAction.CallbackContext context);
+        void OnJoyStick(InputAction.CallbackContext context);
     }
 }

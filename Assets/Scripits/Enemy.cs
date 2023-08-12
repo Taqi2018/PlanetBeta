@@ -3,6 +3,10 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
+using System.Collections.Generic;
+
+
+
 using UnityEngine.SceneManagement;
 
 
@@ -10,6 +14,8 @@ public class Enemy : MonoBehaviour
 {
  
     public static Enemy Instance { get; private set; }
+    public bool PlayerOnTarget { get; private set; }
+
     [SerializeField]NavMeshAgent navMeshAgent;
     
     private int killCounter;
@@ -20,26 +26,42 @@ public class Enemy : MonoBehaviour
     [SerializeField]private float playerChasingRange;
     private bool isWalking;
     private bool isPlayerInChasingRangeOfScorpian;
-    private bool isAttack;
+    private  bool isAttack;
     private Vector3 currentPosition;
     [SerializeField]private float attackDelay;
     [SerializeField]private float attackingRangeForShield;
+    GameObject[] ships;
+    private GameObject shipSelectedToAttack;
+    [SerializeField]private Transform alienShootingPoint;
+    [SerializeField]  Transform enemyBulletPrefab;
+    [SerializeField]private float enemyBulletSpeed;
 
-  
+    public Vector3 shootDir;
+
+
+
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+  
+        
         Instance = this;
         navMeshAgent = GetComponent<NavMeshAgent>();
-
+        LoadShields();
         moveDir = Ship.Instance.transform.position- transform.position;
         transform.forward = Vector3.Slerp(transform.position, moveDir, 0.0001f);
 
         ShiedDestructionEvent.Instance.OnDestructionOfLastPart += GameOver;
 
-  
+
+    }
+
+    private void LoadShields()
+    {
+       ships = GameObject.FindGameObjectsWithTag("ship");
 
 
     }
@@ -93,34 +115,40 @@ public class Enemy : MonoBehaviour
         if (Vector3.Distance(Player.Instance.transform.position, transform.position) > attackingRangeOfScorpian)
         {
             MoveTowardsPlayer();
+            PlayerOnTarget = false;
         }
         else
         {
-            AttackToPlayer();         
+            navMeshAgent.SetDestination(transform.position);
+            if (!PlayerOnTarget)
+            {
+                PlayerOnTarget = true;
+                ManageAttackToPlayer();
+            }
         }
 
     }
 
     private void MoveTowardsPlayer()
     {
+      
         isWalking = true;
-        isAttack = false;
+    //    isAttack = false;
 
 
         navMeshAgent.SetDestination(Player.Instance.transform.position);
     }
 
 
-    private void AttackToPlayer()
+    private void ManageAttackToPlayer()
     {
+
         if (!isAttack)
         {
-
-            navMeshAgent.SetDestination(transform.position);
-            isWalking = false;
-            isAttack = true;
-            ReduceHp();
-            StartCoroutine(AttackDelay());
+         
+        
+            AttackPlayer();
+          //  StartCoroutine(AttackDelay());
     
         }
     }
@@ -128,8 +156,56 @@ public class Enemy : MonoBehaviour
     IEnumerator AttackDelay()
     {
         yield return new WaitForSeconds(attackDelay);
-        isAttack = false;
+     //   isAttack = false;
     }
+
+    void AttackPlayer()
+    {
+        //stop
+     
+
+        isWalking = false;
+        isAttack = true;
+
+
+
+        transform.forward = Vector3.Slerp(transform.forward, Player.Instance.transform.position - transform.position, 2.0f);
+        StartCoroutine(AllienShootingDelay());
+ 
+
+
+
+
+
+        GameOverCheck();
+
+    }
+
+    private IEnumerator AllienShootingDelay()
+    {
+        
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1, 20));
+        Transform bullet = Instantiate(enemyBulletPrefab, alienShootingPoint.position, Quaternion.LookRotation(Player.Instance.transform.position-transform.position, Vector3.up));
+        /*
+                Rigidbody bulletRigidBody = bullet.GetComponent<Rigidbody>();
+                bulletRigidBody.velocity = shootDir * enemyBulletSpeed;
+                */
+        isAttack = false;
+        yield return new WaitForSeconds(2.0f);
+        ManageAttackToPlayer();
+
+    
+
+       // StartCoroutine(BulletDieTime(bullet));
+
+    }
+/*
+    IEnumerator BulletDieTime(Transform bullet)
+    {
+        yield return new WaitForSeconds(2.0f);
+        Destroy(bullet.gameObject);
+    }*/
+
 
 
 
@@ -142,7 +218,14 @@ public class Enemy : MonoBehaviour
         {
             isWalking = true;
             isAttack = false;
-            navMeshAgent.SetDestination(Ship.Instance.transform.position);
+
+            // int randomNo = UnityEngine.Random.Range(0,2);
+
+
+
+
+            shipSelectedToAttack = ships[0];
+            navMeshAgent.SetDestination(shipSelectedToAttack.transform.position);
         }
         else
         {
@@ -172,17 +255,22 @@ public class Enemy : MonoBehaviour
     {
 
 
-        for (int i = 30; i >= 0; i--)
+        if (transform.name == "Scorpian"  || transform.name == "Scorpian(Clone)")
         {
-
-
-            GameObject shieldPart = ShieldGrower.Instance.activeShieldParts[i];
-            if (shieldPart.activeInHierarchy)
+  
+            for (int i = 30; i >= 0; i--)
             {
-                shieldPart.SetActive(false);
-                break;
-            }
 
+
+                GameObject shieldPart = ShieldGrower.Instance.activeShieldParts[i];
+                if (shieldPart.activeInHierarchy)
+                {
+                    shieldPart.SetActive(false);
+                    break;
+                }
+
+
+            }
 
         }
 
@@ -199,7 +287,7 @@ public class Enemy : MonoBehaviour
 
             killCounter++;
         }
-        if (killCounter ==7)
+        if (killCounter ==20)
         {
             Destroy(transform.gameObject);
         }
@@ -218,15 +306,6 @@ public class Enemy : MonoBehaviour
     }
 
 
-  void ReduceHp()
-    {
-
-
-        Player.Instance.hP = Player.Instance.hP - 10;
-
-        GameOverCheck();
-
-    }
 
 
 

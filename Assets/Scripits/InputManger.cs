@@ -10,7 +10,7 @@ public class InputManger : MonoBehaviour
 
     public static InputManger Instance { get; private set; }
 
-    public event EventHandler <onChangePositionEventArgs>TapEventInputActionRequired;
+    public event EventHandler <onChangePositionEventArgs>OnJoyStickMovement;
 
 
 
@@ -73,41 +73,64 @@ public class InputManger : MonoBehaviour
         yield return new WaitForSeconds(singleTapDelay);
 
     }
-/*
-    //Only call once when we click mouse 
-    public void MouseTriggerChangePositionEvent(InputAction.CallbackContext context)
+    /*
+        //Only call once when we click mouse 
+        public void MouseTriggerChangePositionEvent(InputAction.CallbackContext context)
+        {
+
+
+
+            if (context.started)
+            {
+                isTap = context.started;
+
+                position = playerInputActions.Player.MousePosition.ReadValue<Vector2>();
+                TapEventInputActionRequired?.Invoke(this, new onChangePositionEventArgs { position = position });
+
+            }
+
+            if (context.performed)
+            {
+
+                isHold = context.performed;
+
+            }
+            if (context.canceled)
+            {
+                isHold = false;
+            }
+
+
+        }
+    */
+
+
+
+    public void JoyStickMovementEvent(InputAction.CallbackContext context)
     {
+        
+           
 
-
-
-        if (context.started)
-        {
-            isTap = context.started;
-
-            position = playerInputActions.Player.MousePosition.ReadValue<Vector2>();
-            TapEventInputActionRequired?.Invoke(this, new onChangePositionEventArgs { position = position });
-
-        }
-
-        if (context.performed)
-        {
-
-            isHold = context.performed;
-
-        }
         if (context.canceled)
         {
-            isHold = false;
+            OnJoyStickMovement?.Invoke(this, new onChangePositionEventArgs { position =Vector2.zero });
+            Debug.Log(position);
         }
+        else
+        {
+            Vector2 movementVector = playerInputActions.Player.JoyStick.ReadValue<Vector2>();
 
+            OnJoyStickMovement?.Invoke(this, new onChangePositionEventArgs { position = movementVector });
+        }
+        
+     
 
     }
-*/
 
     public void TapTriggerChangePositionEvent(InputAction.CallbackContext context)
     {
 
-
+/*
         Debug.Log("hi");
 
         if (context.started)
@@ -132,7 +155,7 @@ public class InputManger : MonoBehaviour
             isHold = false;
         }
 
-
+*/
     }
 
 

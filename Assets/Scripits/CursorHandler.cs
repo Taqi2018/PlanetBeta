@@ -17,7 +17,7 @@ public class CursorHandler : MonoBehaviour
     private void ChangeCursorPosition(object sender, EventGenrator.OnPlayerWalkingEventArgs e)
     {
         cursor.SetActive(true);
-        transform.position = e.PlayerWalkToPoint;
+        transform.position = e.inputVector;
     }
 
 

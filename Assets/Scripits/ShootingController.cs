@@ -29,12 +29,21 @@ public class ShootingController : MonoBehaviour
     private void Start()
     {
         Instance = this;
-        EventGenrator.Instance.OnEnemyTarget += SetShootDirection;
-        EventGenrator.Instance.OnPlayerWalking += ActionOnPlayerWalking;
+    /*    EventGenrator.Instance.OnEnemyTarget += SetShootDirection;*/
+       EventGenrator.Instance.OnPlayerWalking += ActionOnPlayerWalking;
+        TargetRange.Instance.OnEnemyInTarget   += SetShootDirection;
+        TargetRange.Instance.OnNoEnemyInTarget += StopShootingEvent;
+
 
         OnSingleShootPerformedByPlayer += OffSingleShoot;
 
  
+    }
+
+    private void StopShootingEvent(object sender, EventArgs e)
+    {
+        isShooting = false;
+        isBrustMode = false;
     }
 
     private void OffSingleShoot(object sender, EventArgs e)
@@ -52,12 +61,13 @@ public class ShootingController : MonoBehaviour
     private void ActionOnPlayerWalking(object sender, EventGenrator.OnPlayerWalkingEventArgs e)
     {
         isShooting = false;
+        isBrustMode = false;
     }
 
-    private void SetShootDirection(object sender, EventGenrator.OnEnemyTargetEventArgs e)
+    private void SetShootDirection(object sender, TargetRange.OnEnemyInTargetEventArgs e)
     {
         isShooting = true;
-        shootDir = e.OnEnemyTargetPoint - shootingPoint.position;
+        shootDir = e.enemyPosition - shootingPoint.position;
     }
 
 
@@ -83,7 +93,7 @@ public class ShootingController : MonoBehaviour
     {
         if (isShooting)
         {
-            if (InputManger.Instance.IsTap())
+     /*       if (InputManger.Instance.IsTap())
             {
 
 
@@ -97,22 +107,22 @@ public class ShootingController : MonoBehaviour
 
                 OnSingleShootPerformedByPlayer.Invoke(this, EventArgs.Empty);
 
-            }
-            if (InputManger.Instance.IsHold())
+            }*/
+       /*     if (InputManger.Instance.IsHold())
             {
-
+*/
                 isBrustMode = true;
                 //isSingleMode = false;
                 Instantiate(bullerPrefab, shootingPoint.position, Quaternion.LookRotation(shootDir,Vector3.up) );
         
-
+/*
                 
-            }
-            if (!(InputManger.Instance.IsHold())){
+            }*/
+          /*  if (!(InputManger.Instance.IsHold())){
                 isBrustMode = false;
              
             }
-
+*/
 
 
         }

@@ -11,7 +11,7 @@ public class EventGenrator : MonoBehaviour
     public event EventHandler <OnPlayerWalkingEventArgs>OnPlayerWalking;
     public class OnPlayerWalkingEventArgs : EventArgs
     {
-        public Vector3 PlayerWalkToPoint;
+        public Vector2 inputVector;
     }
 
     public event EventHandler <OnEnemyTargetEventArgs>OnEnemyTarget;
@@ -24,43 +24,15 @@ public class EventGenrator : MonoBehaviour
     void Start()
     {
         Instance = this;
-        InputManger.Instance.TapEventInputActionRequired += EventGenratorMethod;
+        InputManger.Instance.OnJoyStickMovement += MovementByJoystickMethod;
     }
 
-    private void EventGenratorMethod(object sender, InputManger.onChangePositionEventArgs e)
+    private void MovementByJoystickMethod(object sender, InputManger.onChangePositionEventArgs e)
     {
 
-        
-        Ray ray = Camera.main.ScreenPointToRay(e.position);
 
-
-        if (Physics.Raycast(ray, out RaycastHit raycastHit))
-        {
-            if (raycastHit.transform.TryGetComponent(out Player player))
-            {
-
-                OnPlayerSelected?.Invoke(this, EventArgs.Empty);
-
-             
-
-            }
-
-            if (Player.Instance.IsPlayerSelected() & raycastHit.transform.name == "Floor")
-            {
-                OnPlayerWalking?.Invoke(this, new OnPlayerWalkingEventArgs {PlayerWalkToPoint =raycastHit.point});
-
-
-            }
-            if (Player.Instance.IsPlayerSelected() & raycastHit.transform.TryGetComponent(out Enemy enemy))
-            {
-                OnEnemyTarget?.Invoke(this, new OnEnemyTargetEventArgs { OnEnemyTargetPoint=raycastHit.point});
-
-
-
-            }
-
-        }
-
+        OnPlayerWalking?.Invoke(this, new OnPlayerWalkingEventArgs { inputVector = e.position });
+     
     }
 
 }
