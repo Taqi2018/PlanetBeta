@@ -13,7 +13,7 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       LoopTheScorpianSpawn();
+        LoopTheScorpianSpawn();
         LoopTheDroneSpawn();
     }
 
@@ -22,15 +22,11 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(RandomScorpianSpawnTimer());
    
 
-
-
     }
 
     private void LoopTheDroneSpawn()
     {
         StartCoroutine(RandomDroneGroupSpawnTimer());
-
-
 
     }
 
@@ -45,32 +41,32 @@ public class EnemySpawner : MonoBehaviour
 
     }
 
-    private void SpwanDroneGroup()
-    {
+     private void SpwanDroneGroup()
+     {
+          SoundManager.PlaySound(SoundManager.Sound.EnemySpawnSound);
+          //float[] values;
+          int HowManyDrones = UnityEngine.Random.Range(2, 3);
+          Vector3 SpawnAreaVector = GetRandomSpawnVector();
+          Vector3[] SpawnVectorsByIndex;
+          SpawnVectorsByIndex = new Vector3[HowManyDrones];
+          Vector3 singleDronePosition;
 
-        //float[] values;
-        int HowManyDrones = UnityEngine.Random.Range(2, 3);
-        Vector3 SpawnAreaVector = GetRandomSpawnVector();
-        Vector3[] SpawnVectorsByIndex;
-        SpawnVectorsByIndex = new Vector3[HowManyDrones];
-        Vector3 singleDronePosition;
+          for (int i = 0; i < HowManyDrones; i++)
+          {
+               singleDronePosition = new Vector3(SpawnAreaVector.x + VariationInSpawnPosition(), 5, SpawnAreaVector.z + VariationInSpawnPosition());
+               Instantiate(drone, singleDronePosition, Quaternion.identity);
+          }
 
-        for(int i = 0; i < HowManyDrones; i++)
-        {
-            singleDronePosition = new Vector3(SpawnAreaVector.x + VariationInSpawnPosition(), 5, SpawnAreaVector.z + VariationInSpawnPosition()) ;
-            Instantiate(drone, singleDronePosition, Quaternion.identity);
-        }
 
-   
 
-        /*
-                for (int i = 0; i <= HowManyDrones; i++)
-                {
-                    Instantiate(drone, , Quaternion.identity);
-                }*/
-    }
+          /*
+                  for (int i = 0; i <= HowManyDrones; i++)
+                  {
+                      Instantiate(drone, , Quaternion.identity);
+                  }*/
+     }
 
-    private float VariationInSpawnPosition()
+     private float VariationInSpawnPosition()
     {
         float variationFactor = UnityEngine.Random.Range(-2, +2);
         return variationFactor;
@@ -93,14 +89,15 @@ public class EnemySpawner : MonoBehaviour
         Vector3 randomSpawnPosition = CalculateRandomPositionVector();
         return randomSpawnPosition;
     }
-    private void SpwanGreenScorpian()
-    {
-        Instantiate(smallGreenScorpians, GetRandomSpawnVector(),Quaternion.identity);
+     private void SpwanGreenScorpian()
+     {
+          SoundManager.PlaySound(SoundManager.Sound.EnemySpawnSound);
+          Instantiate(smallGreenScorpians, GetRandomSpawnVector(), Quaternion.identity);
 
-    }
+     }
 
 
-    private Vector3 CalculateRandomPositionVector()
+     private Vector3 CalculateRandomPositionVector()
     {
         int xRandom = UnityEngine.Random.Range(0, Convert.ToInt32(floor.localScale.x));
         int zRandom = UnityEngine.Random.Range(0, Convert.ToInt32(floor.localScale.z));

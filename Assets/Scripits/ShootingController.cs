@@ -12,9 +12,11 @@ public class ShootingController : MonoBehaviour
 
 
     public static  ShootingController Instance{get; private set;} 
-    
+
+
     [SerializeField] private Transform shootingPoint;
     [SerializeField] private Transform bullerPrefab;
+
     private bool isShooting;
     [SerializeField] float shootingDelayTime;
     private bool isSingleMode, isBrustMode;

@@ -74,25 +74,26 @@ public class Player : MonoBehaviour
     }
 
 
-    private void ActionOnPlayerWalkingEvent(object sender, EventGenrator.OnPlayerWalkingEventArgs e)
-    {
-        isWalking = true;
-        targetPosition = e.PlayerWalkToPoint;
-    }
+     private void ActionOnPlayerWalkingEvent(object sender, EventGenrator.OnPlayerWalkingEventArgs e)
+     {
+          isWalking = true;
+          targetPosition = e.PlayerWalkToPoint;
+     }
 
 
-    private void ActionOnEnemyTargetEvent(object sender, EventGenrator.OnEnemyTargetEventArgs e)
-    {
-        isWalking = false;
+     private void ActionOnEnemyTargetEvent(object sender, EventGenrator.OnEnemyTargetEventArgs e)
+     {
+          isWalking = false;
 
-            transform.forward = Vector3.Slerp(transform.position, e.OnEnemyTargetPoint - transform.position, playerRotationSpeed);
+          transform.forward = Vector3.Slerp(transform.position, e.OnEnemyTargetPoint - transform.position, playerRotationSpeed);
+          SoundManager.PlaySound(SoundManager.Sound.PlayerAttack);
 
-    }
+     }
 
 
- 
 
-    void Update()
+
+     void Update()
     {
 
         MovementHandler();
@@ -110,20 +111,22 @@ public class Player : MonoBehaviour
 
     }
 
-    private void WalkToTargetPosition()
-    {
-    
-        Vector3 playerDirection = targetPosition - transform.position;
-        transform.forward = Vector3.Slerp(transform.forward, playerDirection, playerRotationSpeed * Time.deltaTime);
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, playerSpeed * Time.deltaTime);
-        if (transform.position == targetPosition)
-        {
-            isWalking = false;
-        }
-    }
+     private void WalkToTargetPosition()
+     {
+          SoundManager.PlaySound(SoundManager.Sound.PlayerMove);
+          Vector3 playerDirection = targetPosition - transform.position;
+          transform.forward = Vector3.Slerp(transform.forward, playerDirection, playerRotationSpeed * Time.deltaTime);
+          transform.position = Vector3.MoveTowards(transform.position, targetPosition, playerSpeed * Time.deltaTime);
 
+          if (transform.position == targetPosition)
+          {
+               isWalking = false;
+          }
+     }
 
-    public bool IsWalking()
+     
+
+     public bool IsWalking()
     {
         return isWalking;
     }

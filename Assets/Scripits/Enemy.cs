@@ -97,21 +97,22 @@ public class Enemy : MonoBehaviour
     }
 
 
-    private void AttackToPlayer()
-    {
-        if (!isAttack)
-        {
+     private void AttackToPlayer()
+     {
+          if (!isAttack)
+          {
 
-            navMeshAgent.SetDestination(transform.position);
-            isWalking = false;
-            isAttack = true;
-            ReduceHp();
-            StartCoroutine(AttackDelay());
-    
-        }
-    }
+               navMeshAgent.SetDestination(transform.position);
+               isWalking = false;
+               isAttack = true;
+               ReduceHp();
+               StartCoroutine(AttackDelay());
+               SoundManager.PlaySound(SoundManager.Sound.EnemyAttack);
 
-    IEnumerator AttackDelay()
+          }
+     }
+
+     IEnumerator AttackDelay()
     {
         yield return new WaitForSeconds(attackDelay);
         isAttack = false;
