@@ -35,7 +35,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]private Transform alienShootingPoint;
     [SerializeField]  Transform enemyBulletPrefab;
     [SerializeField]private float enemyBulletSpeed;
-
+    public float maxHealth;
+    public  float health;
+    public HealthBar HealthBar;
     public Vector3 shootDir;
 
 
@@ -46,6 +48,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        health = maxHealth;
   
         
         Instance = this;
@@ -278,7 +281,7 @@ public class Enemy : MonoBehaviour
         /*ShieldGrower.Instance.shieldPartToActivate.gameObject.SetActive(false);*/
 
     }
-
+/*
     private void OnTriggerEnter(Collider other)
     {
   
@@ -293,10 +296,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
+*/
 
     public bool IsWalking()
     {
+        return isWalking;
         return isWalking;
     }
 
@@ -311,7 +315,7 @@ public class Enemy : MonoBehaviour
 
     private void GameOverCheck()
     {
-        if (Player.Instance.hP <= 0)
+        if (Player.Instance.health <= 0)
         {
             Debug.Log("GameOver");
             SceneManager.LoadScene("GameOver");

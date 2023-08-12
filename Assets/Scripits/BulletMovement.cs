@@ -6,6 +6,8 @@ public class BulletMovement : MonoBehaviour
 {
     Rigidbody bulletRigidBody;
     [SerializeField] float bulletSpeed;
+    private float damageOfWeapon;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +33,12 @@ public class BulletMovement : MonoBehaviour
         
         if (other.TryGetComponent(out Enemy enemy))
         {
+            enemy.health = enemy.health - damageOfWeapon;
+            enemy.HealthBar.SetHealthBar(enemy.health);
+            if (enemy.health <= 0)
+            {
+                Destroy(enemy.gameObject);
+            }
             Destroy(transform.gameObject);
         }
 

@@ -30,8 +30,10 @@ public class EnemyBullet : MonoBehaviour
         if (other.transform.TryGetComponent(out Player player))
         {
             Debug.Log(other.transform.name);
-            Player.Instance.hP = Player.Instance.hP - 10;
-          
+            Player.Instance.health = Player.Instance.health - 10;
+            player.playerHealthBar.SetHealthBar(Player.Instance.health);
+       
+
         }
     }
 
