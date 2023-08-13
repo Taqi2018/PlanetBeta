@@ -6,7 +6,7 @@ public class BulletMovement : MonoBehaviour
 {
     Rigidbody bulletRigidBody;
     [SerializeField] float bulletSpeed;
-    private float damageOfWeapon;
+    [SerializeField]private float damageOfWeapon;
 
     // Start is called before the first frame update
     void Start()

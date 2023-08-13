@@ -187,7 +187,7 @@ public class Enemy : MonoBehaviour
     private IEnumerator AllienShootingDelay()
     {
         
-        yield return new WaitForSeconds(UnityEngine.Random.Range(1, 20));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1, 5));
         Transform bullet = Instantiate(enemyBulletPrefab, alienShootingPoint.position, Quaternion.LookRotation(Player.Instance.transform.position-transform.position, Vector3.up));
         /*
                 Rigidbody bulletRigidBody = bullet.GetComponent<Rigidbody>();
