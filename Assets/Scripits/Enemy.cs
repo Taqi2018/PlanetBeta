@@ -41,6 +41,7 @@ public class Enemy : MonoBehaviour
     public HealthBar HealthBar;
     public Vector3 shootDir;
     private bool hit;
+    List <float> Distance;
 
 
 
@@ -50,6 +51,8 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+ 
+        Distance = new List<float>();
         hit = false;
         health = maxHealth;
   
@@ -64,29 +67,44 @@ public class Enemy : MonoBehaviour
 
 
 
+        int a = ships.Length;
+        for(int i = 0; i <a; i++)
+        {
+            Distance.Add(Vector3.Distance(transform.position, ships[i].transform.position));
+        }
 
-        float Distance1 = Vector3.Distance(transform.position, ships[0].transform.position);
-        float Distance2 = Vector3.Distance(transform.position, ships[1].transform.position);
-        float Distance3 = Vector3.Distance(transform.position, ships[2].transform.position);
+   
+        foreach(float g in Distance)
+        {
+            Debug.Log(g);
+        }
+        shipSelectedToAttack = ships[0];
+        /*        float Distance= Vector3.Distance(transform.position, ships[0].transform.position);
+                float Distance = Vector3.Distance(transform.position, ships[1].transform.position);
+             //   float Distance3 = Vector3.Distance(transform.position, ships[2].transform.position);*/
 
-        if(Distance1>Distance2 & Distance1 > Distance3)
-        {
-            shipSelectedToAttack = ships[0];
-        }
-        if (Distance2 > Distance1 & Distance2 > Distance3)
-        {
-            shipSelectedToAttack = ships[1];
-        }
-        if (Distance3 > Distance1 & Distance3 > Distance2)
-        {
-            shipSelectedToAttack = ships[2];
-        }
+        /*    if(Distance1>Distance2 & Distance1 > Distance3)
+            {
+                shipSelectedToAttack = ships[0];
+            }
+            if (Distance2 > Distance1 & Distance2 > Distance3)
+            {
+                shipSelectedToAttack = ships[1];
+            }
+            if (Distance3 > Distance1 & Distance3 > Distance2)
+            {
+                shipSelectedToAttack = ships[2];
+            }*/
 
     }
 
     private void LoadShields()
     {
-       ships = GameObject.FindGameObjectsWithTag("ship");
+       ships = GameObject.FindGameObjectsWithTag("zPoint");
+        foreach(GameObject s in ships)
+        {
+            Debug.Log(s.name);
+        }
 
 
     }
@@ -195,6 +213,7 @@ public class Enemy : MonoBehaviour
 
 
         transform.forward = Vector3.Slerp(transform.forward, Player.Instance.transform.position - transform.position, 2.0f);
+       
         StartCoroutine(AllienShootingDelay());
  
 

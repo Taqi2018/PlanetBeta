@@ -52965,7 +52965,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96ce9f82ee726ca4a9304c77b8231ead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 10
+  bulletSpeed: 5
   damageOfWeapon: 1
 --- !u!1 &2825775328993203482
 GameObject:

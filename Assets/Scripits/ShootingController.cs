@@ -35,7 +35,7 @@ public class ShootingController : MonoBehaviour
 
 
     public Vector3 shootDir;
-    private bool lockUpdate;
+    public  bool lockUpdate;
     public float fireDelay;
 
     private void Start()

@@ -76,6 +76,8 @@ public class Player : MonoBehaviour
 
     private void MovementHandler()
     {
+      
+
         if (isWalking)
         {
             Walking();
@@ -83,6 +85,8 @@ public class Player : MonoBehaviour
 
     }
 
+
+  
     private void Walking()
     {
 
