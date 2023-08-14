@@ -763,6 +763,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b90c039a8bed9cb4093792edf599d980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bloodParticles: {fileID: 8374220444191295621, guid: 05cbeec094e232249b7e6a147b3c0af7,
+    type: 3}
   navMeshAgent: {fileID: 7003752844576415335}
   attackingRangeOfScorpian: 5
   playerLayerMask:
@@ -775,7 +777,7 @@ MonoBehaviour:
     type: 3}
   enemyBulletPrefab: {fileID: 7041224808858871873}
   enemyBulletSpeed: 2
-  maxHealth: 20
+  maxHealth: 2
   health: 0
   HealthBar: {fileID: 3099354505109134439}
   shootDir: {x: 0, y: 0, z: 0}
@@ -1761,7 +1763,7 @@ PrefabInstance:
     - target: {fileID: 2879312817587502539, guid: e8b4116a5803b4147a802b68195b8a7e,
         type: 3}
       propertyPath: maxHealth
-      value: 20
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2879312818024676314, guid: e8b4116a5803b4147a802b68195b8a7e,
         type: 3}

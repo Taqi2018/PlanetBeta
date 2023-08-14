@@ -13,9 +13,9 @@ public class BulletMovement : MonoBehaviour
     {
 
       bulletRigidBody=  transform.GetComponent<Rigidbody>();
-        
-
-      bulletRigidBody.velocity = ShootingController.Instance.shootDir * bulletSpeed;
+  
+        bulletRigidBody.velocity = ShootingController.Instance.shootDir * bulletSpeed;
+     
         StartCoroutine(BulletDieTime());
 
 
@@ -33,13 +33,15 @@ public class BulletMovement : MonoBehaviour
         
         if (other.TryGetComponent(out Enemy enemy))
         {
+          //  bulletHitParticles.transform.gameObject.SetActive(true);
+           // bulletHitParticles.Play();
             enemy.health = enemy.health - damageOfWeapon;
             enemy.HealthBar.SetHealthBar(enemy.health);
             if (enemy.health <= 0)
             {
                 Destroy(enemy.gameObject);
             }
-            Destroy(transform.gameObject);
+          //  Destroy(transform.gameObject);
         }
 
     }
@@ -49,7 +51,7 @@ public class BulletMovement : MonoBehaviour
 
     IEnumerator BulletDieTime()
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(20.0f);
         Destroy(transform.gameObject);
     }
  

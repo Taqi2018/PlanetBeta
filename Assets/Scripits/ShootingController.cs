@@ -6,6 +6,17 @@ using UnityEngine;
 public class ShootingController : MonoBehaviour
 {
 
+
+   public enum Guns
+    {
+        ShotGun,
+        Ar,
+        Pistol
+    }
+
+    public Guns guns;
+
+    [SerializeField] public ParticleSystem bulletInstantiateParticles;
     public event EventHandler OnSingleShootPerformedByPlayer;
 
  
@@ -14,32 +25,43 @@ public class ShootingController : MonoBehaviour
     public static  ShootingController Instance{get; private set;} 
     
     [SerializeField] private Transform shootingPoint;
-    [SerializeField] private Transform bullerPrefab;
+    [SerializeField] private Transform arBullet,ShotGunBullet,pistolBulletPrefab;
+    [SerializeField] public Transform ar, pistol, shotgun;
+    [SerializeField]
+ 
     private bool isShooting;
     [SerializeField] float shootingDelayTime;
     private bool isSingleMode, isBrustMode;
 
 
     public Vector3 shootDir;
-
-
-
-
+    private bool lockUpdate;
+    public float fireDelay;
 
     private void Start()
     {
+        pistol.gameObject.SetActive(true);
+        ar.gameObject.SetActive(false);
+        shotgun.gameObject.SetActive(false);
+        lockUpdate = false;
         Instance = this;
     /*    EventGenrator.Instance.OnEnemyTarget += SetShootDirection;*/
        EventGenrator.Instance.OnPlayerWalking += ActionOnPlayerWalking;
         TargetRange.Instance.OnEnemyInTarget   += SetShootDirection;
         TargetRange.Instance.OnNoEnemyInTarget += StopShootingEvent;
 
+       // InputManger.Instance.OnTouchScreen += SelectGunEvent;
 
         OnSingleShootPerformedByPlayer += OffSingleShoot;
 
  
     }
 
+/*    private void SelectGunEvent(object sender, InputManger.OnTouchScreenEventArgs e)
+    {
+        Camera.main.ScreenPointToRay()
+    }
+*/
     private void StopShootingEvent(object sender, EventArgs e)
     {
         isShooting = false;
@@ -93,42 +115,59 @@ public class ShootingController : MonoBehaviour
     {
         if (isShooting)
         {
-     /*       if (InputManger.Instance.IsTap())
+           
+            if (lockUpdate == false)
             {
-
-
-                isSingleMode = true;
-                isBrustMode = false;
-
-                
-                
-                Instantiate(bullerPrefab, shootingPoint.position, Quaternion.LookRotation(shootDir, Vector3.up));
-          
-
-                OnSingleShootPerformedByPlayer.Invoke(this, EventArgs.Empty);
-
-            }*/
-       /*     if (InputManger.Instance.IsHold())
-            {
-*/
-                isBrustMode = true;
-                //isSingleMode = false;
-                Instantiate(bullerPrefab, shootingPoint.position, Quaternion.LookRotation(shootDir,Vector3.up) );
-        
-/*
-                
-            }*/
-          /*  if (!(InputManger.Instance.IsHold())){
-                isBrustMode = false;
-             
+                Debug.Log("Fire__");
+                lockUpdate = true;
+                StartCoroutine(Fire());
+                Fire();
             }
-*/
+
 
 
         }
     }
 
+    IEnumerator Fire()
+    {
+        isBrustMode = true;
+        
+        bulletInstantiateParticles.gameObject.SetActive(true);
+        bulletInstantiateParticles.Play();
 
-    
+        if (guns == Guns.Pistol)
+        {
+            Debug.Log("Pistol");
+            pistol.gameObject.SetActive(true);
+/*            ar.gameObject.SetActive(false);
+            shotgun.gameObject.SetActive(false);
+            ar.gameObject.SetActive(true);*/
 
+            Instantiate(pistolBulletPrefab, shootingPoint.position, Quaternion.LookRotation(shootDir, Vector3.up));
+            SoundManager.Instance.Play("pistol");
+        }
+        if (guns == Guns.Ar)
+        {
+            Debug.Log("Ar");
+/*            pistol.gameObject.SetActive(false);
+            ar.gameObject.SetActive(true);
+            shotgun.gameObject.SetActive(false);*/
+            Instantiate(arBullet, shootingPoint.position, Quaternion.LookRotation(shootDir, Vector3.up));
+            SoundManager.Instance.Play("ar");
+        }
+        if (guns == Guns.ShotGun)
+        {
+            Debug.Log("sg");
+/*            pistol.gameObject.SetActive(false);
+            ar.gameObject.SetActive(false);
+            shotgun.gameObject.SetActive(true);*/
+            Instantiate(ShotGunBullet, shootingPoint.position, Quaternion.LookRotation(shootDir, Vector3.up));
+            SoundManager.Instance.Play("shootGun");
+        }
+        //  Instantiate(bullerPrefab, shootingPoint.position, Quaternion.LookRotation(shootDir, Vector3.up));
+       // SoundManager.Instance.Play("ar");
+        yield return new WaitForSeconds(fireDelay);
+        lockUpdate = false;
+    }
 }

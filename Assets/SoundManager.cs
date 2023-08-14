@@ -1,54 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 public class SoundManager : MonoBehaviour
 {
-    public GameObject player;
+    public static SoundManager Instance { get;  private set; }
+    public Sound[] sounds;
 
-    public AudioClip playerSound;
-    public AudioClip shootingSound;
-    public AudioClip backgroundSound;
-
-    public static SoundManager instance;
-    AudioSource playerAudio;
-
-
-
-
-    void Start()
+    private void Awake()
     {
-        instance = this;
-        playerAudio = player.GetComponent<AudioSource>();
+        Instance = this;
+      foreach(Sound s in sounds)
+        {
+            s.source = gameObject.AddComponent<AudioSource>();
+            s.source.clip = s.clip;
+            s.source.loop = s.loop;
+          
+        }
 
+        Play("backGround");
 
     }
-    public void StartCrowdSound()
+
+    public void Play(string name)
     {
-        playerAudio.clip = backgroundSound;
-        playerAudio.Play();
-    }
-    public void StartWalkSound()
-    {
-        playerAudio.clip = playerSound;
-        playerAudio.Play();
+        Sound sp=Array.Find(sounds, s => s.soundName == name);
+        sp.source.Play();
     }
 
-    public void StopWalkSound()
-    {
-        playerAudio.Stop();
-    }
-    public void StartJavelinSound()
-    {
-        playerAudio.clip = shootingSound;
-        playerAudio.Play();
-    }
-
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

@@ -12,6 +12,15 @@ public class InputManger : MonoBehaviour
 
     public event EventHandler <onChangePositionEventArgs>OnJoyStickMovement;
 
+    public event EventHandler <OnTouchScreenEventArgs> OnTouchScreen;
+
+
+    public class OnTouchScreenEventArgs : EventArgs
+    {
+        public Vector2 touchLocation;
+    }
+
+
 
 
 
@@ -73,36 +82,26 @@ public class InputManger : MonoBehaviour
         yield return new WaitForSeconds(singleTapDelay);
 
     }
-    /*
-        //Only call once when we click mouse 
-        public void MouseTriggerChangePositionEvent(InputAction.CallbackContext context)
+
+    //Only call once when we click mouse 
+    public void TouchTriggerEvent(InputAction.CallbackContext context)
+    {
+
+
+
+        if (context.started)
         {
 
 
-
-            if (context.started)
-            {
-                isTap = context.started;
-
-                position = playerInputActions.Player.MousePosition.ReadValue<Vector2>();
-                TapEventInputActionRequired?.Invoke(this, new onChangePositionEventArgs { position = position });
-
-            }
-
-            if (context.performed)
-            {
-
-                isHold = context.performed;
-
-            }
-            if (context.canceled)
-            {
-                isHold = false;
-            }
-
+            position = playerInputActions.Player.TouchPosition.ReadValue<Vector2>();
+            OnTouchScreen?.Invoke(this, new OnTouchScreenEventArgs { touchLocation = position });
 
         }
-    */
+
+
+
+    }
+
 
 
 

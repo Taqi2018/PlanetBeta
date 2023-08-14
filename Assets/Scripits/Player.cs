@@ -5,8 +5,11 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
+
+
     [SerializeField] public float health;
     public HealthBar playerHealthBar;
+    
     public float maxHealth;
 
 

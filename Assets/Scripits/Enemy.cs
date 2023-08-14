@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
  
     public static Enemy Instance { get; private set; }
     public bool PlayerOnTarget { get; private set; }
+    public ParticleSystem bloodParticles;
 
     [SerializeField]NavMeshAgent navMeshAgent;
     
@@ -39,6 +40,7 @@ public class Enemy : MonoBehaviour
     public  float health;
     public HealthBar HealthBar;
     public Vector3 shootDir;
+    private bool hit;
 
 
 
@@ -48,6 +50,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        hit = false;
         health = maxHealth;
   
         
@@ -59,6 +62,25 @@ public class Enemy : MonoBehaviour
 
         ShiedDestructionEvent.Instance.OnDestructionOfLastPart += GameOver;
 
+
+
+
+        float Distance1 = Vector3.Distance(transform.position, ships[0].transform.position);
+        float Distance2 = Vector3.Distance(transform.position, ships[1].transform.position);
+        float Distance3 = Vector3.Distance(transform.position, ships[2].transform.position);
+
+        if(Distance1>Distance2 & Distance1 > Distance3)
+        {
+            shipSelectedToAttack = ships[0];
+        }
+        if (Distance2 > Distance1 & Distance2 > Distance3)
+        {
+            shipSelectedToAttack = ships[1];
+        }
+        if (Distance3 > Distance1 & Distance3 > Distance2)
+        {
+            shipSelectedToAttack = ships[2];
+        }
 
     }
 
@@ -222,12 +244,16 @@ public class Enemy : MonoBehaviour
             isWalking = true;
             isAttack = false;
 
-            // int randomNo = UnityEngine.Random.Range(0,2);
+
+
+   
+
+            int randomNo = UnityEngine.Random.Range(0,2);
 
 
 
 
-            shipSelectedToAttack = ships[0];
+          
             navMeshAgent.SetDestination(shipSelectedToAttack.transform.position);
         }
         else
@@ -301,7 +327,7 @@ public class Enemy : MonoBehaviour
     public bool IsWalking()
     {
         return isWalking;
-        return isWalking;
+     //   return isWalking;
     }
 
     public bool IsAttacking()
@@ -324,4 +350,17 @@ public class Enemy : MonoBehaviour
         }
     }
 
+
+
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+
+
+        bloodParticles.transform.gameObject.SetActive(true);
+            bloodParticles.Play();
+          
+ 
+    }
 }

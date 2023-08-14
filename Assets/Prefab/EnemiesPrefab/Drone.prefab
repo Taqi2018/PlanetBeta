@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b90c039a8bed9cb4093792edf599d980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bloodParticles: {fileID: 8374220444191295621, guid: 05cbeec094e232249b7e6a147b3c0af7,
+    type: 3}
   navMeshAgent: {fileID: 2854283667498577042}
   attackingRangeOfScorpian: 20
   playerLayerMask:
@@ -59,8 +61,8 @@ MonoBehaviour:
   alienShootingPoint: {fileID: 6911067695671767160}
   enemyBulletPrefab: {fileID: 6729741511416871233, guid: 90e234b366087964ab9d7c8221b7eaae,
     type: 3}
-  enemyBulletSpeed: 10
-  maxHealth: 10
+  enemyBulletSpeed: 3
+  maxHealth: 3
   health: 0
   HealthBar: {fileID: 7131842400810388479}
   shootDir: {x: 0, y: 0, z: 0}
