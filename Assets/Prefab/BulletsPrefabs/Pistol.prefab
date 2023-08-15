@@ -52966,7 +52966,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 5
-  damageOfWeapon: 1
+  damageOfWeapon: 0.8
+  bulletHitParticles: {fileID: 1373555960392537723}
 --- !u!1 &2825775328993203482
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ public class BulletMovement : MonoBehaviour
     Rigidbody bulletRigidBody;
     [SerializeField] float bulletSpeed;
     [SerializeField]private float damageOfWeapon;
+    [SerializeField] ParticleSystem bulletHitParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -30,11 +31,17 @@ public class BulletMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.tag == "wall")
+        {
+              bulletHitParticles.transform.gameObject.SetActive(true);
+             bulletHitParticles.Play();
+            Destroy(gameObject);
+
+        }
         
         if (other.TryGetComponent(out Enemy enemy))
         {
-          //  bulletHitParticles.transform.gameObject.SetActive(true);
-           // bulletHitParticles.Play();
+      
             enemy.health = enemy.health - damageOfWeapon;
             enemy.HealthBar.SetHealthBar(enemy.health);
             if (enemy.health <= 0)

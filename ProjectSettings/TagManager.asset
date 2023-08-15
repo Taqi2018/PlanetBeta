@@ -9,6 +9,7 @@ TagManager:
   - ship
   - bullet
   - zPoint
+  - wall
   layers:
   - Default
   - TransparentFX

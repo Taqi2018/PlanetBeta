@@ -59,7 +59,7 @@ Transform:
   m_GameObject: {fileID: 5869847030512439336}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.78, y: 0.17, z: -1.24}
-  m_LocalScale: {x: 1, y: 1, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6268830065649434777}
@@ -107,7 +107,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 12
+  m_Speed: 6
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -816,6 +816,31 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 8743813690021804245, guid: a2c84f3a8f2019d41a6b3637839af7ce,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: de94494218705344586a39e36f16a74e, type: 2}
+    - target: {fileID: 8743813690021804245, guid: a2c84f3a8f2019d41a6b3637839af7ce,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: de94494218705344586a39e36f16a74e, type: 2}
+    - target: {fileID: 8743813690021804245, guid: a2c84f3a8f2019d41a6b3637839af7ce,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: de94494218705344586a39e36f16a74e, type: 2}
+    - target: {fileID: 8743813690021804245, guid: a2c84f3a8f2019d41a6b3637839af7ce,
+        type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: de94494218705344586a39e36f16a74e, type: 2}
+    - target: {fileID: 8743813690021804245, guid: a2c84f3a8f2019d41a6b3637839af7ce,
+        type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: de94494218705344586a39e36f16a74e, type: 2}
     - target: {fileID: 8817898888258712963, guid: a2c84f3a8f2019d41a6b3637839af7ce,
         type: 3}
       propertyPath: m_Layer

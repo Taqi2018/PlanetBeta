@@ -21,8 +21,9 @@ public class Player : MonoBehaviour
     private bool isPlayerSelected;
     private bool isWalking;
     private Vector3 movementVector2d;
-
+    Vector3 moveDir;
     [SerializeField] float playerSpeed, playerRotationSpeed;
+    private bool isPlayerCollide;
 
     private void Awake()
     {
@@ -61,6 +62,7 @@ public class Player : MonoBehaviour
 
             isWalking = true;
             movementVector2d = e.inputVector;
+            moveDir = new Vector3(movementVector2d.x, 0f, movementVector2d.y);
         }
 
 
@@ -76,25 +78,62 @@ public class Player : MonoBehaviour
 
     private void MovementHandler()
     {
-      
+         
+       bool canMove = !IsPlayerCollide();
 
-        if (isWalking)
+        if (canMove)
         {
-            Walking();
+            if (isWalking)
+            {
+                Walking();
+            }
         }
 
     }
 
 
-  
+    private bool IsPlayerCollide()
+    {
+        float playerRadius = 0.3f;
+        float playerHeight = 2.0f;
+        float rangeToDetectCollision = playerSpeed * Time.deltaTime;
+        bool isCollide = Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDir, rangeToDetectCollision);
+        if (isCollide)
+        {
+            //Attemp to move in X
+
+            Vector3 moveDirX = new Vector3(moveDir.x, 0, 0).normalized;
+            isCollide = Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirX, rangeToDetectCollision);
+            if (!isCollide)
+            {
+                moveDir = moveDirX;
+            }
+
+            if (isCollide)
+            {
+                Vector3 moveDirZ = new Vector3(0, 0, moveDir.z).normalized;
+                isCollide = Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirZ, rangeToDetectCollision);
+                if (!isCollide)
+                {
+                    moveDir = moveDirZ;
+                }
+            }
+
+
+        }
+        return isCollide;
+    }
+
+
+
     private void Walking()
     {
 
-        Vector3 playerMovement3dVec = new Vector3(movementVector2d.x, 0f, movementVector2d.y);
+    
 
-        transform.position += playerMovement3dVec * Time.deltaTime * playerSpeed;
+        transform.position += moveDir * Time.deltaTime * playerSpeed;
 
-        transform.forward = Vector3.Slerp(transform.forward, playerMovement3dVec, playerRotationSpeed * Time.deltaTime);
+        transform.forward = Vector3.Slerp(transform.forward, moveDir, playerRotationSpeed * Time.deltaTime);
 
     }
 
@@ -121,9 +160,11 @@ public class Player : MonoBehaviour
 
     private void ActionOnEnemyTargetEvent(object sender, TargetRange.OnEnemyInTargetEventArgs e)
     {
-        isWalking = false;
-
-        transform.forward = Vector3.Slerp(transform.position, e.enemyPosition - transform.position, playerRotationSpeed);
+        // isWalking = false;
+        if (!IsWalking())
+        {
+            transform.forward = Vector3.Slerp(transform.position, e.enemyPosition - transform.position, playerRotationSpeed);
+        }
 
     }
 

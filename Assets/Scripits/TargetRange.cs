@@ -35,13 +35,15 @@ public class TargetRange : MonoBehaviour
         if (other.tag == "Enemy")
         {
             enemies.Add(other.gameObject);
+       
             OnEnemyInTarget?.Invoke(this, new OnEnemyInTargetEventArgs { enemyPosition = other.transform.position });
         }
         else
         {
-            bool noEnemiesInRadius = !Physics.CheckSphere(transform.position, checkRadius, enemyLayer);
+            bool noEnemiesInRadius = !Physics.CheckSphere(transform.position, transform.GetComponent<SphereCollider>().radius, enemyLayer);
             if (noEnemiesInRadius)
             {
+            ///    StartCoroutine(DelayForStopShooting());
                 OnNoEnemyInTarget?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -49,7 +51,12 @@ public class TargetRange : MonoBehaviour
 
     }
 
-
+/*    private IEnumerator DelayForStopShooting()
+    {
+        yield return new WaitForSeconds(2.0f);
+        throw new NotImplementedException();
+    }
+*/
     private void OnTriggerExit(Collider other)
     {
      /*   if (other.CompareTag("Enemy"))

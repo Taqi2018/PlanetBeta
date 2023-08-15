@@ -82,8 +82,9 @@ public class ShootingController : MonoBehaviour
 
     private void ActionOnPlayerWalking(object sender, EventGenrator.OnPlayerWalkingEventArgs e)
     {
-        isShooting = false;
-        isBrustMode = false;
+        //isShooting = false;
+        
+      // isBrustMode = false;
     }
 
     private void SetShootDirection(object sender, TargetRange.OnEnemyInTargetEventArgs e)
@@ -113,7 +114,7 @@ public class ShootingController : MonoBehaviour
 
     private void Update()
     {
-        if (isShooting)
+        if (isShooting   & !Player.Instance.IsWalking())
         {
            
             if (lockUpdate == false)

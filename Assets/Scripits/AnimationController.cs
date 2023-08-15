@@ -38,19 +38,19 @@ public class AnimationController : MonoBehaviour
         {
             playerAnimator.SetBool("isWalking", false);
         }
-        if (ShootingController.Instance.lockUpdate)
+        if (ShootingController.Instance.IsSingleMode())
         {
             playerAnimator.SetBool("isSingleMode", ShootingController.Instance.IsSingleMode());
         }
-        if (!ShootingController.Instance.lockUpdate)
+        if (!ShootingController.Instance.IsSingleMode())
         {
             playerAnimator.SetBool("isSingleMode", ShootingController.Instance.IsSingleMode());
         }
-        if (ShootingController.Instance.lockUpdate)
+        if (ShootingController.Instance.IsBrustMode())
         {
             playerAnimator.SetBool("isBrustMode", ShootingController.Instance.IsBrustMode());
         }
-        if (!ShootingController.Instance.lockUpdate)
+        if (!ShootingController.Instance.IsBrustMode())
         {
             playerAnimator.SetBool("isBrustMode", ShootingController.Instance.IsBrustMode());
         }

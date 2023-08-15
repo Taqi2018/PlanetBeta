@@ -6,7 +6,7 @@ using UnityEngine;
 public class EventGenrator : MonoBehaviour
 {
     public static EventGenrator Instance { get; private set; }
-    public event EventHandler OnPlayerSelected;
+
 
     public event EventHandler <OnPlayerWalkingEventArgs>OnPlayerWalking;
     public class OnPlayerWalkingEventArgs : EventArgs
@@ -14,7 +14,6 @@ public class EventGenrator : MonoBehaviour
         public Vector2 inputVector;
     }
 
-    public event EventHandler <OnEnemyTargetEventArgs>OnEnemyTarget;
 
     public class OnEnemyTargetEventArgs: EventArgs
     {

@@ -52966,7 +52966,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 5
-  damageOfWeapon: 1.5
+  damageOfWeapon: 1.2
+  bulletHitParticles: {fileID: 1373555960392537723}
 --- !u!1 &2825775328993203482
 GameObject:
   m_ObjectHideFlags: 0
@@ -57911,7 +57912,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HitEffect: {fileID: 2825775328993203482}
   HitOffset: 0.01
-  MaxLength: 2
+  MaxLength: 1000
   MainTextureLength: 0.2
   NoiseTextureLength: 0.2
 --- !u!120 &5657165716990221631

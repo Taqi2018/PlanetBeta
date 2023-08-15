@@ -52938,7 +52938,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!65 &6556840240195019993
 BoxCollider:
@@ -52966,7 +52966,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 5
-  damageOfWeapon: 3
+  damageOfWeapon: 2
+  bulletHitParticles: {fileID: 1373555960392537723}
 --- !u!1 &2825775328993203482
 GameObject:
   m_ObjectHideFlags: 0
@@ -57911,7 +57912,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HitEffect: {fileID: 2825775328993203482}
   HitOffset: 0.01
-  MaxLength: 5
+  MaxLength: 1000
   MainTextureLength: 0.2
   NoiseTextureLength: 0.2
 --- !u!120 &5657165716990221631
@@ -57960,7 +57961,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 2
     widthCurve:
       serializedVersion: 2
       m_Curve:

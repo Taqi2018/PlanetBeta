@@ -14471,7 +14471,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &400008
 Transform:
   m_ObjectHideFlags: 0
@@ -14527,6 +14527,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: E_BloodEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 8374220444210401765, guid: 05cbeec094e232249b7e6a147b3c0af7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8374220444210695621, guid: 05cbeec094e232249b7e6a147b3c0af7,
         type: 3}

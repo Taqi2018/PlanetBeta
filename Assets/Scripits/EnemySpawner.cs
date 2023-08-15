@@ -31,10 +31,11 @@ public class EnemySpawner : MonoBehaviour
 
             LoopTheScorpianSpawn();
             LoopTheAlienGroup();
+            LoopTheDroneSpawn();
         }
-   /*     LoopTheScorpianSpawn();
-       // LoopTheDroneSpawn();
-        LoopTheAlienGroup();*/
+        /*     LoopTheScorpianSpawn();
+            // LoopTheDroneSpawn();
+             LoopTheAlienGroup();*/
     }
 
     private void LoopTheAlienGroup()
@@ -179,7 +180,7 @@ public class EnemySpawner : MonoBehaviour
 
     private float VariationInSpawnPosition()
     {
-        float variationFactor = UnityEngine.Random.Range(-2, +2);
+        float variationFactor = UnityEngine.Random.Range(-10, +10);
         return variationFactor;
 
     }
