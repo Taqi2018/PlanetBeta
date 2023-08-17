@@ -11,6 +11,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] Transform drone;
     public Transform Level1Sp1, Level1Sp2, Level1Ap1;
     public List<GameObject> alienSpawnPoints, scorpianSpawnPoints, DroneSpawnPoints;
+    public ParticleSystem alienSpawnEffect;
     // Start is called before the first frame update
     void Start()
     {
@@ -72,7 +73,12 @@ public class EnemySpawner : MonoBehaviour
             for (int i = 0; i < HowManyAliens; i++)
             {
                 singleDronePosition = new Vector3(SpawnAreaVector.x + VariationInSpawnPosition(), 5, SpawnAreaVector.z + VariationInSpawnPosition());
+
                 Instantiate(alien, singleDronePosition, Quaternion.identity);
+
+                Instantiate(alienSpawnEffect, singleDronePosition, Quaternion.identity);
+                alienSpawnEffect.Play();
+
             }
         }
 
@@ -97,6 +103,8 @@ public class EnemySpawner : MonoBehaviour
             {
                 singleDronePosition = new Vector3(SpawnAreaVector.x + VariationInSpawnPosition(), 5, SpawnAreaVector.z + VariationInSpawnPosition());
                 Instantiate(alien, singleDronePosition, Quaternion.identity);
+                Instantiate(alienSpawnEffect, singleDronePosition, Quaternion.identity);
+                alienSpawnEffect.Play();
             }
         }
    

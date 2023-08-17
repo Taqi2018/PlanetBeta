@@ -44,7 +44,8 @@ public class Enemy : MonoBehaviour
     List<float> Distance;
     public bool isScorpianDead;
     public bool isAlienDead;
-
+    public bool isDroneDead;
+    public ParticleSystem droneHitEffect;
     public float animationDeathTime;
 
 
@@ -145,25 +146,55 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
-        else
+        if(transform.name == "Alien" || transform.name == "Alien(Clone)")
         {
-            isPlayerInChasingRangeOfScorpian = Physics.CheckSphere(transform.position, playerChasingRange, playerLayerMask);
-
-
-
-            if (!isPlayerInChasingRangeOfScorpian)
+            if (!isAlienDead)
             {
-                ShipInteractionHandeling();
+                isPlayerInChasingRangeOfScorpian = Physics.CheckSphere(transform.position, playerChasingRange, playerLayerMask);
 
+
+
+                if (!isPlayerInChasingRangeOfScorpian)
+                {
+                    ShipInteractionHandeling();
+
+                }
+
+
+
+
+                if (isPlayerInChasingRangeOfScorpian)
+                {
+                    PlayerInteractonHandeling();
+
+                }
             }
 
+        }
 
 
-
-            if (isPlayerInChasingRangeOfScorpian)
+        if (transform.name == "Drone" || transform.name == "Drone(Clone)")
+        {
+            if (!isDroneDead)
             {
-                PlayerInteractonHandeling();
+                isPlayerInChasingRangeOfScorpian = Physics.CheckSphere(transform.position, playerChasingRange, playerLayerMask);
 
+
+
+                if (!isPlayerInChasingRangeOfScorpian)
+                {
+                    ShipInteractionHandeling();
+
+                }
+
+
+
+
+                if (isPlayerInChasingRangeOfScorpian)
+                {
+                    PlayerInteractonHandeling();
+
+                }
             }
 
         }
@@ -434,6 +465,20 @@ public class Enemy : MonoBehaviour
                     StartCoroutine(DelayForDeathAnimation());
                 }
 
+                if (name == "Drone" || name == "Drone(Clone)")
+                {
+                    isDroneDead = true;
+
+                    Instantiate(droneHitEffect, transform.position, Quaternion.identity);
+                    droneHitEffect.transform.gameObject.SetActive(true);
+                    droneHitEffect.Play();
+                   // transform.position= Vector3.MoveTowards(other.transform.position, (Vector3.down - other.transform.position)*5,2);
+                    // Destroy(enemy.gameObject);
+                    StopEnemy();
+
+                    StartCoroutine(DelayForDeathAnimation());
+                }
+
 
 
             }
@@ -449,6 +494,10 @@ public class Enemy : MonoBehaviour
 
             yield return new WaitForSeconds(animationDeathTime);
 
+            if(transform.name=="Drone" || transform.name == "Drone(Clone)")
+            {
+             droneHitEffect.transform.gameObject.SetActive(false);
+            }
 
             Destroy(transform.gameObject);
 
