@@ -160,10 +160,13 @@ public class Player : MonoBehaviour
 
     private void ActionOnEnemyTargetEvent(object sender, TargetRange.OnEnemyInTargetEventArgs e)
     {
+
         // isWalking = false;
         if (!IsWalking())
         {
-            transform.forward = Vector3.Slerp(transform.position, e.enemyPosition - transform.position, playerRotationSpeed);
+            Vector3 normalEnemeyPos = new Vector3(e.enemyPosition.x, 0, e.enemyPosition.z);
+            transform.forward = Vector3.Slerp(transform.position, normalEnemeyPos - transform.position, playerRotationSpeed);
+            
         }
 
     }

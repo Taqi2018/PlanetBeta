@@ -58423,8 +58423,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114678305193455830, guid: 30f45a15e0a47a943912fda204502b81,
         type: 3}
+      propertyPath: HitEffect
+      value: 
+      objectReference: {fileID: 4991708199700218617}
+    - target: {fileID: 114678305193455830, guid: 30f45a15e0a47a943912fda204502b81,
+        type: 3}
       propertyPath: MaxLength
-      value: 5
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 114678305193455830, guid: 30f45a15e0a47a943912fda204502b81,
         type: 3}
@@ -58434,7 +58439,7 @@ PrefabInstance:
     - target: {fileID: 114678305193455830, guid: 30f45a15e0a47a943912fda204502b81,
         type: 3}
       propertyPath: NoiseTextureLength
-      value: 0
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 120067324791973530, guid: 30f45a15e0a47a943912fda204502b81,
         type: 3}
@@ -58444,10 +58449,16 @@ PrefabInstance:
     - target: {fileID: 120067324791973530, guid: 30f45a15e0a47a943912fda204502b81,
         type: 3}
       propertyPath: m_Parameters.widthMultiplier
-      value: 3
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30f45a15e0a47a943912fda204502b81, type: 3}
+--- !u!1 &4991708199700218617 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1718501638257176, guid: 30f45a15e0a47a943912fda204502b81,
+    type: 3}
+  m_PrefabInstance: {fileID: 4989995941004638433}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4994679586739814911 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4692998033864990, guid: 30f45a15e0a47a943912fda204502b81,

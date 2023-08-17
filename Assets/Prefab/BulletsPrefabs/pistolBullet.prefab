@@ -52902,7 +52902,7 @@ GameObject:
   - component: {fileID: 6556840240195019993}
   - component: {fileID: -3353183953600405952}
   m_Layer: 0
-  m_Name: ArPlayerBullet 1
+  m_Name: pistolBullet
   m_TagString: bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52938,7 +52938,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 2
 --- !u!65 &6556840240195019993
 BoxCollider:
@@ -52966,8 +52966,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 5
-  damageOfWeapon: 2
-  bulletHitParticles: {fileID: 1373555960392537723}
+  damageOfWeapon: 0.8
+  bulletHitShotGunEffect: {fileID: 5775313501544880934, guid: 25efff29be0306941a4af13ca1b7444d,
+    type: 3}
+  bulletHitArEffect: {fileID: 6224465788242493055, guid: 2999938d174172b42b58685b7916c5ad,
+    type: 3}
+  bulletHitPistolEffect: {fileID: 8511248584009906967, guid: 3269a56e8e25a834bb41e600c703180d,
+    type: 3}
 --- !u!1 &2825775328993203482
 GameObject:
   m_ObjectHideFlags: 0
@@ -57912,7 +57917,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HitEffect: {fileID: 2825775328993203482}
   HitOffset: 0.01
-  MaxLength: 1000
+  MaxLength: 100
   MainTextureLength: 0.2
   NoiseTextureLength: 0.2
 --- !u!120 &5657165716990221631
@@ -57961,7 +57966,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 2
+    widthMultiplier: 0.5
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -57988,8 +57993,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0, b: 0.047945976, a: 1}
-      key1: {r: 1, g: 0, b: 0.11678028, a: 1}
+      key0: {r: 1, g: 0.89550054, b: 0, a: 1}
+      key1: {r: 0, g: 1, b: 0.03658533, a: 1}
       key2: {r: 1, g: 0.405365, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}

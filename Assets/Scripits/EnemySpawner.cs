@@ -61,7 +61,22 @@ public class EnemySpawner : MonoBehaviour
         {
              SpawnAreaVector = alienSpawnPoints[0].transform.position;
             scorpianSpawnPoints.Remove(alienSpawnPoints[0]);
+
+
+            int HowManyAliens = UnityEngine.Random.Range(2, 4);
+
+            Vector3[] SpawnVectorsByIndex;
+            SpawnVectorsByIndex = new Vector3[HowManyAliens];
+            Vector3 singleDronePosition;
+
+            for (int i = 0; i < HowManyAliens; i++)
+            {
+                singleDronePosition = new Vector3(SpawnAreaVector.x + VariationInSpawnPosition(), 5, SpawnAreaVector.z + VariationInSpawnPosition());
+                Instantiate(alien, singleDronePosition, Quaternion.identity);
+            }
         }
+
+
         if(alienSpawnPoints.Count>1)
         {
             foreach(GameObject a in alienSpawnPoints)
@@ -70,19 +85,21 @@ public class EnemySpawner : MonoBehaviour
                 alienSpawnPoints.Remove(a);
                 break;
             }
-        }
-     
-        int HowManyAliens = UnityEngine.Random.Range(4, 9);
-      
-        Vector3[] SpawnVectorsByIndex;
-        SpawnVectorsByIndex = new Vector3[HowManyAliens];
-        Vector3 singleDronePosition;
 
-        for (int i = 0; i < HowManyAliens; i++)
-        {
-            singleDronePosition = new Vector3(SpawnAreaVector.x + VariationInSpawnPosition(), 5, SpawnAreaVector.z + VariationInSpawnPosition());
-            Instantiate(alien, singleDronePosition, Quaternion.identity);
+
+            int HowManyAliens = UnityEngine.Random.Range(3, 6);
+
+            Vector3[] SpawnVectorsByIndex;
+            SpawnVectorsByIndex = new Vector3[HowManyAliens];
+            Vector3 singleDronePosition;
+
+            for (int i = 0; i < HowManyAliens; i++)
+            {
+                singleDronePosition = new Vector3(SpawnAreaVector.x + VariationInSpawnPosition(), 5, SpawnAreaVector.z + VariationInSpawnPosition());
+                Instantiate(alien, singleDronePosition, Quaternion.identity);
+            }
         }
+   
 
     }
 
@@ -187,11 +204,15 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator RandomScorpianSpawnTimer()
     {
-        int randomScorpianSpwanTime = UnityEngine.Random.Range(2, 5);
+        int randomScorpianSpwanTime = UnityEngine.Random.Range(3, 6);
         yield return new WaitForSeconds(randomScorpianSpwanTime);
 
-        SpwanGreenScorpian();
-        LoopTheScorpianSpawn();
+
+        if (scorpianSpawnPoints.Count > 0)
+        {
+            SpwanGreenScorpian();
+            LoopTheScorpianSpawn();
+        }
 
 
     }
@@ -200,7 +221,7 @@ public class EnemySpawner : MonoBehaviour
     private void SpwanGreenScorpian()
     {
 
-        int HowManyAliens = UnityEngine.Random.Range(3, 8);
+        int HowManyAliens = UnityEngine.Random.Range(4, 9);
         Vector3 SpawnAreaVector = Vector3.zero;
         if (scorpianSpawnPoints.Count == 1)
         {

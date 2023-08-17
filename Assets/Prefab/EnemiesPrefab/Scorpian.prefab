@@ -781,6 +781,8 @@ MonoBehaviour:
   health: 0
   HealthBar: {fileID: 3099354505109134439}
   shootDir: {x: 0, y: 0, z: 0}
+  isScorpianDead: 0
+  animationDeathTime: 2
 --- !u!65 &7003752844576415332
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -12,37 +12,40 @@ using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
- 
+
     public static Enemy Instance { get; private set; }
     public bool PlayerOnTarget { get; private set; }
     public ParticleSystem bloodParticles;
 
-    [SerializeField]NavMeshAgent navMeshAgent;
-    
+    [SerializeField] NavMeshAgent navMeshAgent;
+
     private int killCounter;
 
     Vector3 moveDir;
-    [SerializeField]private float attackingRangeOfScorpian;
-    [SerializeField]private LayerMask playerLayerMask;
-    [SerializeField]private float playerChasingRange;
+    [SerializeField] private float attackingRangeOfScorpian;
+    [SerializeField] private LayerMask playerLayerMask;
+    [SerializeField] private float playerChasingRange;
     private bool isWalking;
     private bool isPlayerInChasingRangeOfScorpian;
-    private  bool isAttack;
+    private bool isAttack;
     private Vector3 currentPosition;
-    [SerializeField]private float attackDelay;
-    [SerializeField]private float attackingRangeForShield;
+    [SerializeField] private float attackDelay;
+    [SerializeField] private float attackingRangeForShield;
     GameObject[] ships;
     private GameObject shipSelectedToAttack;
-    [SerializeField]private Transform alienShootingPoint;
-    [SerializeField]  Transform enemyBulletPrefab;
-    [SerializeField]private float enemyBulletSpeed;
+    [SerializeField] private Transform alienShootingPoint;
+    [SerializeField] Transform enemyBulletPrefab;
+    [SerializeField] private float enemyBulletSpeed;
     public float maxHealth;
-    public  float health;
+    public float health;
     public HealthBar HealthBar;
     public Vector3 shootDir;
     private bool hit;
-    List <float> Distance;
+    List<float> Distance;
+    public bool isScorpianDead;
+    public bool isAlienDead;
 
+    public float animationDeathTime;
 
 
 
@@ -51,16 +54,16 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
- 
+
         Distance = new List<float>();
         hit = false;
         health = maxHealth;
-  
-        
+
+
         Instance = this;
         navMeshAgent = GetComponent<NavMeshAgent>();
         LoadShields();
-        moveDir = Ship.Instance.transform.position- transform.position;
+        moveDir = Ship.Instance.transform.position - transform.position;
         transform.forward = Vector3.Slerp(transform.position, moveDir, 0.0001f);
 
         ShiedDestructionEvent.Instance.OnDestructionOfLastPart += GameOver;
@@ -68,13 +71,13 @@ public class Enemy : MonoBehaviour
 
 
         int a = ships.Length;
-        for(int i = 0; i <a; i++)
+        for (int i = 0; i < a; i++)
         {
             Distance.Add(Vector3.Distance(transform.position, ships[i].transform.position));
         }
 
-   
-        foreach(float g in Distance)
+
+        foreach (float g in Distance)
         {
             Debug.Log(g);
         }
@@ -100,8 +103,8 @@ public class Enemy : MonoBehaviour
 
     private void LoadShields()
     {
-       ships = GameObject.FindGameObjectsWithTag("zPoint");
-        foreach(GameObject s in ships)
+        ships = GameObject.FindGameObjectsWithTag("zPoint");
+        foreach (GameObject s in ships)
         {
             Debug.Log(s.name);
         }
@@ -118,25 +121,52 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isPlayerInChasingRangeOfScorpian = Physics.CheckSphere(transform.position, playerChasingRange, playerLayerMask);
-
-
-
-        if (!isPlayerInChasingRangeOfScorpian)
+        if (transform.name == "Scorpian" || transform.name == "Scorpian(Clone)")
         {
-            ShipInteractionHandeling();
+            if (!isScorpianDead)
+            {
+                isPlayerInChasingRangeOfScorpian = Physics.CheckSphere(transform.position, playerChasingRange, playerLayerMask);
+
+
+
+                if (!isPlayerInChasingRangeOfScorpian)
+                {
+                    ShipInteractionHandeling();
+
+                }
+
+
+
+
+                if (isPlayerInChasingRangeOfScorpian)
+                {
+                    PlayerInteractonHandeling();
+
+                }
+            }
+        }
+        else
+        {
+            isPlayerInChasingRangeOfScorpian = Physics.CheckSphere(transform.position, playerChasingRange, playerLayerMask);
+
+
+
+            if (!isPlayerInChasingRangeOfScorpian)
+            {
+                ShipInteractionHandeling();
+
+            }
+
+
+
+
+            if (isPlayerInChasingRangeOfScorpian)
+            {
+                PlayerInteractonHandeling();
+
+            }
 
         }
-
-
-
-
-        if (isPlayerInChasingRangeOfScorpian)
-        {
-            PlayerInteractonHandeling();
-
-        }
-
 
 
 
@@ -154,7 +184,7 @@ public class Enemy : MonoBehaviour
     private void PlayerInteractonHandeling()
     {
 
-       
+
         if (Vector3.Distance(Player.Instance.transform.position, transform.position) > attackingRangeOfScorpian)
         {
             MoveTowardsPlayer();
@@ -174,9 +204,9 @@ public class Enemy : MonoBehaviour
 
     private void MoveTowardsPlayer()
     {
-      
+
         isWalking = true;
-    //    isAttack = false;
+        //    isAttack = false;
 
 
         navMeshAgent.SetDestination(Player.Instance.transform.position);
@@ -188,24 +218,24 @@ public class Enemy : MonoBehaviour
 
         if (!isAttack)
         {
-         
-        
+
+
             AttackPlayer();
-          //  StartCoroutine(AttackDelay());
-    
+            //  StartCoroutine(AttackDelay());
+
         }
     }
 
     IEnumerator AttackDelay()
     {
         yield return new WaitForSeconds(attackDelay);
-     //   isAttack = false;
+        //   isAttack = false;
     }
 
     void AttackPlayer()
     {
         //stop
-     
+
 
         isWalking = false;
         isAttack = true;
@@ -213,9 +243,9 @@ public class Enemy : MonoBehaviour
 
 
         transform.forward = Vector3.Slerp(transform.forward, Player.Instance.transform.position - transform.position, 2.0f);
-       
+
         StartCoroutine(AllienShootingDelay());
- 
+
 
 
 
@@ -227,9 +257,9 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator AllienShootingDelay()
     {
-        
+
         yield return new WaitForSeconds(UnityEngine.Random.Range(1, 5));
-        Transform bullet = Instantiate(enemyBulletPrefab, alienShootingPoint.position, Quaternion.LookRotation(Player.Instance.transform.position-transform.position, Vector3.up));
+        Transform bullet = Instantiate(enemyBulletPrefab, alienShootingPoint.position, Quaternion.LookRotation(Player.Instance.transform.position - transform.position, Vector3.up));
         /*
                 Rigidbody bulletRigidBody = bullet.GetComponent<Rigidbody>();
                 bulletRigidBody.velocity = shootDir * enemyBulletSpeed;
@@ -238,22 +268,22 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         ManageAttackToPlayer();
 
-    
 
-       // StartCoroutine(BulletDieTime(bullet));
+
+        // StartCoroutine(BulletDieTime(bullet));
 
     }
-/*
-    IEnumerator BulletDieTime(Transform bullet)
-    {
-        yield return new WaitForSeconds(2.0f);
-        Destroy(bullet.gameObject);
-    }*/
+    /*
+        IEnumerator BulletDieTime(Transform bullet)
+        {
+            yield return new WaitForSeconds(2.0f);
+            Destroy(bullet.gameObject);
+        }*/
 
 
 
 
- 
+
 
 
     private void ShipInteractionHandeling()
@@ -265,14 +295,14 @@ public class Enemy : MonoBehaviour
 
 
 
-   
-
-            int randomNo = UnityEngine.Random.Range(0,2);
 
 
+            int randomNo = UnityEngine.Random.Range(0, 2);
 
 
-          
+
+
+
             navMeshAgent.SetDestination(shipSelectedToAttack.transform.position);
         }
         else
@@ -299,13 +329,19 @@ public class Enemy : MonoBehaviour
         }
     }
 
+
+    public void StopEnemy()
+    {
+        navMeshAgent.SetDestination(transform.position);
+    }
+
     private void ReduceShipHp()
     {
 
 
-        if (transform.name == "Scorpian"  || transform.name == "Scorpian(Clone)")
+        if (transform.name == "Scorpian" || transform.name == "Scorpian(Clone)")
         {
-  
+
             for (int i = 30; i >= 0; i--)
             {
 
@@ -326,27 +362,27 @@ public class Enemy : MonoBehaviour
         /*ShieldGrower.Instance.shieldPartToActivate.gameObject.SetActive(false);*/
 
     }
-/*
-    private void OnTriggerEnter(Collider other)
-    {
-  
-        if (other.TryGetComponent(out BulletMovement bullet))
+    /*
+        private void OnTriggerEnter(Collider other)
         {
 
-            killCounter++;
-        }
-        if (killCounter ==20)
-        {
-            Destroy(transform.gameObject);
-        }
-    }
+            if (other.TryGetComponent(out BulletMovement bullet))
+            {
 
-*/
+                killCounter++;
+            }
+            if (killCounter ==20)
+            {
+                Destroy(transform.gameObject);
+            }
+        }
+
+    */
 
     public bool IsWalking()
     {
         return isWalking;
-     //   return isWalking;
+        //   return isWalking;
     }
 
     public bool IsAttacking()
@@ -375,11 +411,48 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.TryGetComponent(out BulletMovement b))
+        {
+            health = health - b.damageOfWeapon;
+            HealthBar.SetHealthBar(health);
+            if (health <= 0)
+            {
+                if (name == "Scorpian" || name == "Scorpian(Clone)")
+                {
+                    isScorpianDead = true;
+                    // Destroy(enemy.gameObject);
+                    StopEnemy();
+
+                    StartCoroutine(DelayForDeathAnimation());
+                }
+                if (name == "Alien" || name == "Alien(Clone)")
+                {
+                    isAlienDead = true;
+                    // Destroy(enemy.gameObject);
+                    StopEnemy();
+
+                    StartCoroutine(DelayForDeathAnimation());
+                }
 
 
-        bloodParticles.transform.gameObject.SetActive(true);
+
+            }
+
+            bloodParticles.transform.gameObject.SetActive(true);
             bloodParticles.Play();
-          
- 
+
+
+        }
+
+        IEnumerator DelayForDeathAnimation()
+        {
+
+            yield return new WaitForSeconds(animationDeathTime);
+
+
+            Destroy(transform.gameObject);
+
+           // Destroy(transform.gameObject);
+        }
     }
 }

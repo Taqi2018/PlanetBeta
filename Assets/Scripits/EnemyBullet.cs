@@ -25,13 +25,18 @@ public class EnemyBullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-
+        if (other.tag == "wall")
+        {
+            Destroy(transform.gameObject);
+            Debug.Log("enemywalls");
+        }
         
         if (other.transform.TryGetComponent(out Player player))
         {
             Debug.Log(other.transform.name);
             Player.Instance.health = Player.Instance.health - 10;
             player.playerHealthBar.SetHealthBar(Player.Instance.health);
+            Destroy(transform.gameObject);
        
 
         }

@@ -22,6 +22,9 @@ public class ScorpianAnimationController : MonoBehaviour
   
         scorpianAnimator.SetBool("isWalking", scorpian.GetComponent<Enemy>().IsWalking());
 
-        
+
+        scorpianAnimator.SetBool("isDead", scorpian.GetComponent<Enemy>().isScorpianDead);
+
+
     }
 }

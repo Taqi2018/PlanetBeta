@@ -52902,7 +52902,7 @@ GameObject:
   - component: {fileID: 6556840240195019993}
   - component: {fileID: -3353183953600405952}
   m_Layer: 0
-  m_Name: ArPlayerBullet
+  m_Name: shotGunBullet
   m_TagString: bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52938,7 +52938,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!65 &6556840240195019993
 BoxCollider:
@@ -52951,8 +52951,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7761495, y: 0.5256271, z: 1.4300923}
-  m_Center: {x: 0.18033032, y: 0.037113205, z: 0.5431371}
+  m_Size: {x: 0.9920784, y: 0.5256271, z: 1.4300919}
+  m_Center: {x: 0.17134912, y: 0.0371132, z: 0.543137}
 --- !u!114 &-3353183953600405952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52966,8 +52966,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 5
-  damageOfWeapon: 1.2
-  bulletHitParticles: {fileID: 1373555960392537723}
+  damageOfWeapon: 2
+  bulletHitShotGunEffect: {fileID: 5775313501544880934, guid: 25efff29be0306941a4af13ca1b7444d,
+    type: 3}
+  bulletHitArEffect: {fileID: 6224465788242493055, guid: 2999938d174172b42b58685b7916c5ad,
+    type: 3}
+  bulletHitPistolEffect: {fileID: 8511248584009906967, guid: 3269a56e8e25a834bb41e600c703180d,
+    type: 3}
 --- !u!1 &2825775328993203482
 GameObject:
   m_ObjectHideFlags: 0
@@ -57961,7 +57966,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 0.5
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -57988,9 +57993,9 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.3443396, g: 0.6087189, b: 1, a: 1}
-      key1: {r: 0.3443396, g: 0.6087189, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 1, g: 0, b: 0.047945976, a: 1}
+      key1: {r: 1, g: 0, b: 0.11678028, a: 1}
+      key2: {r: 1, g: 0.405365, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -57998,7 +58003,7 @@ LineRenderer:
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
       ctime1: 65535
-      ctime2: 0
+      ctime2: 65535
       ctime3: 0
       ctime4: 0
       ctime5: 0

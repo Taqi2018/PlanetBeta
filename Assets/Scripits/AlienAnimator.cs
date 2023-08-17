@@ -25,7 +25,7 @@ public class AlienAnimator : MonoBehaviour
 
             alienAnimator.SetBool("isAttacking", alien.GetComponent<Enemy>().IsAttacking());
   alienAnimator.SetBool("isWalking", alien.GetComponent<Enemy>().IsWalking());
-
+        alienAnimator.SetBool("isDieing", alien.GetComponent<Enemy>().isAlienDead);
 
     }
 
