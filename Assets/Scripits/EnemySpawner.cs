@@ -17,7 +17,8 @@ public class EnemySpawner : MonoBehaviour
     {
 
 
-        if (SceneManager.GetActiveScene().name == "Level1")
+
+        if (SceneManager.GetActiveScene().name == "GameScene")
         {
             alienSpawnPoints = new List<GameObject>();
             scorpianSpawnPoints = new List<GameObject>();
