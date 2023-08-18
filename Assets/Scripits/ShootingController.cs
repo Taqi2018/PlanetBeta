@@ -27,7 +27,7 @@ public class ShootingController : MonoBehaviour
     [SerializeField] private Transform shootingPoint;
     [SerializeField] private Transform arBullet,ShotGunBullet,pistolBulletPrefab;
     [SerializeField] public Transform ar, pistol, shotgun;
-    [SerializeField]
+    [SerializeField] public float shotGunBulletAmount, arGunBulletAmount;
  
     private bool isShooting;
     [SerializeField] float shootingDelayTime;
@@ -40,9 +40,12 @@ public class ShootingController : MonoBehaviour
 
     private void Start()
     {
+        
+        guns = Guns.Pistol;
         pistol.gameObject.SetActive(true);
         ar.gameObject.SetActive(false);
         shotgun.gameObject.SetActive(false);
+        
         lockUpdate = false;
         Instance = this;
     /*    EventGenrator.Instance.OnEnemyTarget += SetShootDirection;*/
@@ -64,6 +67,8 @@ public class ShootingController : MonoBehaviour
 */
     private void StopShootingEvent(object sender, EventArgs e)
     {
+
+        Debug.Log("stop it fucker!!!");
         isShooting = false;
         isBrustMode = false;
     }
@@ -91,6 +96,7 @@ public class ShootingController : MonoBehaviour
     {
         isShooting = true;
         shootDir = e.enemyPosition - shootingPoint.position;
+
     }
 
 
@@ -146,25 +152,49 @@ public class ShootingController : MonoBehaviour
             ar.gameObject.SetActive(true);*/
 
             Instantiate(pistolBulletPrefab, shootingPoint.position, Quaternion.LookRotation(shootDir, Vector3.up));
+          
             SoundManager.Instance.Play("pistol");
         }
         if (guns == Guns.Ar)
         {
-            Debug.Log("Ar");
-/*            pistol.gameObject.SetActive(false);
-            ar.gameObject.SetActive(true);
-            shotgun.gameObject.SetActive(false);*/
-            Instantiate(arBullet, shootingPoint.position, Quaternion.LookRotation(shootDir, Vector3.up));
-            SoundManager.Instance.Play("ar");
+            if (arGunBulletAmount > 0)
+            {
+                Debug.Log("Ar");
+                /*            pistol.gameObject.SetActive(false);
+                            ar.gameObject.SetActive(true);
+                            shotgun.gameObject.SetActive(false);*/
+                Instantiate(arBullet, shootingPoint.position, Quaternion.LookRotation(shootDir, Vector3.up));
+                SoundManager.Instance.Play("ar");
+                GunSelectionUi.Instance.ArSlider();
+                arGunBulletAmount--;
+            }
+            else
+            {
+                SoundManager.Instance.Play("empty");
+
+
+            }
+        
         }
         if (guns == Guns.ShotGun)
         {
-            Debug.Log("sg");
-/*            pistol.gameObject.SetActive(false);
-            ar.gameObject.SetActive(false);
-            shotgun.gameObject.SetActive(true);*/
-            Instantiate(ShotGunBullet, shootingPoint.position, Quaternion.LookRotation(shootDir, Vector3.up));
-            SoundManager.Instance.Play("shootGun");
+            if (shotGunBulletAmount > 0)
+            {
+                Debug.Log("sg");
+                /*            pistol.gameObject.SetActive(false);
+                            ar.gameObject.SetActive(false);
+                            shotgun.gameObject.SetActive(true);*/
+                Instantiate(ShotGunBullet, shootingPoint.position, Quaternion.LookRotation(shootDir, Vector3.up));
+                SoundManager.Instance.Play("shootGun");
+                GunSelectionUi.Instance.ShotGunSlider();
+                shotGunBulletAmount--;
+            }
+            else
+            {
+                SoundManager.Instance.Play("empty");
+               
+            }
+         
         }
         //  Instantiate(bullerPrefab, shootingPoint.position, Quaternion.LookRotation(shootDir, Vector3.up));
        // SoundManager.Instance.Play("ar");

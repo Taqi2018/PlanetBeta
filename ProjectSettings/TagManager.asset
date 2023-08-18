@@ -10,6 +10,7 @@ TagManager:
   - bullet
   - zPoint
   - wall
+  - Floor
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - UI
   - groundLayer
   - enemyLayer
-  - 
+  - wallLayer
   - 
   - 
   - 

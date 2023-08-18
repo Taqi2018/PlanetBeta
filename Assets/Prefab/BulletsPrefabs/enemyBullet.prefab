@@ -58460,7 +58460,7 @@ PrefabInstance:
     - target: {fileID: 4364624748503685871, guid: 78a38f4f63687cb4295cd6da6ccc507d,
         type: 3}
       propertyPath: MaxLength
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4364624748503685871, guid: 78a38f4f63687cb4295cd6da6ccc507d,
         type: 3}

@@ -55,7 +55,7 @@ MonoBehaviour:
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 8
-  playerChasingRange: 30
+  playerChasingRange: 50
   attackDelay: 1
   attackingRangeForShield: 6
   alienShootingPoint: {fileID: 1087777295}
@@ -68,6 +68,8 @@ MonoBehaviour:
   shootDir: {x: 0, y: 0, z: 0}
   isScorpianDead: 0
   isAlienDead: 0
+  isDroneDead: 0
+  droneHitEffect: {fileID: 0}
   animationDeathTime: 3
 --- !u!195 &5869847030512439337
 NavMeshAgent:

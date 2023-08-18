@@ -81,7 +81,8 @@ public class Player : MonoBehaviour
          
        bool canMove = !IsPlayerCollide();
 
-        if (canMove)
+
+       if (canMove)
         {
             if (isWalking)
             {
@@ -97,7 +98,20 @@ public class Player : MonoBehaviour
         float playerRadius = 0.3f;
         float playerHeight = 2.0f;
         float rangeToDetectCollision = playerSpeed * Time.deltaTime;
-        bool isCollide = Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDir, rangeToDetectCollision);
+      
+        bool isCollide = Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDir,out RaycastHit hit,rangeToDetectCollision);
+   /*     if(hit.transform.TryGetComponent(out MedPack m))
+        {
+            if (m != null)
+            {
+                m.HealthBooster();
+                return false;
+            }
+
+        }*/
+
+
+    
         if (isCollide)
         {
             //Attemp to move in X

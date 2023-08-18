@@ -64,7 +64,7 @@ public class EnemySpawner : MonoBehaviour
             scorpianSpawnPoints.Remove(alienSpawnPoints[0]);
 
 
-            int HowManyAliens = UnityEngine.Random.Range(2, 4);
+            int HowManyAliens = UnityEngine.Random.Range(4, 10);
 
             Vector3[] SpawnVectorsByIndex;
             SpawnVectorsByIndex = new Vector3[HowManyAliens];
@@ -76,7 +76,7 @@ public class EnemySpawner : MonoBehaviour
 
                 Instantiate(alien, singleDronePosition, Quaternion.identity);
 
-                Instantiate(alienSpawnEffect, singleDronePosition, Quaternion.identity);
+                Instantiate(alienSpawnEffect, singleDronePosition+Vector3.down*5, Quaternion.identity);
                 alienSpawnEffect.Play();
 
             }
@@ -103,7 +103,7 @@ public class EnemySpawner : MonoBehaviour
             {
                 singleDronePosition = new Vector3(SpawnAreaVector.x + VariationInSpawnPosition(), 5, SpawnAreaVector.z + VariationInSpawnPosition());
                 Instantiate(alien, singleDronePosition, Quaternion.identity);
-                Instantiate(alienSpawnEffect, singleDronePosition, Quaternion.identity);
+                Instantiate(alienSpawnEffect, singleDronePosition+Vector3.down*5, Quaternion.identity);
                 alienSpawnEffect.Play();
             }
         }
@@ -143,7 +143,7 @@ public class EnemySpawner : MonoBehaviour
     {
 
         //float[] values;
-        int HowManyDrones = UnityEngine.Random.Range(2, 3);
+        int HowManyDrones = UnityEngine.Random.Range(5, 7);
         Vector3 SpawnAreaVector = GetRandomSpawnVector();
         Vector3[] SpawnVectorsByIndex;
         SpawnVectorsByIndex = new Vector3[HowManyDrones];
@@ -229,7 +229,7 @@ public class EnemySpawner : MonoBehaviour
     private void SpwanGreenScorpian()
     {
 
-        int HowManyAliens = UnityEngine.Random.Range(4, 9);
+        int HowManyAliens = UnityEngine.Random.Range(8, 19);
         Vector3 SpawnAreaVector = Vector3.zero;
         if (scorpianSpawnPoints.Count == 1)
         {

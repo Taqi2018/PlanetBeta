@@ -440,7 +440,7 @@ public class Enemy : MonoBehaviour
 
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.TryGetComponent(out BulletMovement b))
         {
@@ -469,7 +469,7 @@ public class Enemy : MonoBehaviour
                 {
                     isDroneDead = true;
 
-                    Instantiate(droneHitEffect, transform.position, Quaternion.identity);
+                   // Instantiate(droneHitEffect, transform.position, Quaternion.identity);
                     droneHitEffect.transform.gameObject.SetActive(true);
                     droneHitEffect.Play();
                    // transform.position= Vector3.MoveTowards(other.transform.position, (Vector3.down - other.transform.position)*5,2);
@@ -496,6 +496,7 @@ public class Enemy : MonoBehaviour
 
             if(transform.name=="Drone" || transform.name == "Drone(Clone)")
             {
+                Debug.Log("dsaojdoasjdpoasjdpoasjdoasjdpoasjdoa");
              droneHitEffect.transform.gameObject.SetActive(false);
             }
 
