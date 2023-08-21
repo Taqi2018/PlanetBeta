@@ -12,8 +12,23 @@ EditorBuildSettings:
     path: Assets/Scenes/Loading Scene.unity
     guid: 7a57c95c1c524014a900afd5d721b036
   - enabled: 1
-    path: Assets/Scenes/GameScene.unity
+    path: Assets/Scenes/Level1.unity
     guid: d5e6d5cc08566d54cb0c20ccd1fda9a6
+  - enabled: 1
+    path: Assets/Scenes/Level2.unity
+    guid: c7b4693902a6f244d95b7be19acdf7ad
+  - enabled: 1
+    path: Assets/Scenes/Level3.unity
+    guid: 2e5e4bd2bde97c141bb25579836aadfa
+  - enabled: 1
+    path: Assets/Scenes/Level4.unity
+    guid: 1f7ec0f9bbf17334698f4d4e7a3fe6a6
+  - enabled: 1
+    path: Assets/Scenes/Level5.unity
+    guid: f0709194e67bd0c4abdf5c6c38b3eeff
+  - enabled: 1
+    path: Assets/Scenes/Level6.unity
+    guid: b21fda56a38dea84f83ffcde2cead052
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 79e82ae48330f234f824fce28347da97,
       type: 2}

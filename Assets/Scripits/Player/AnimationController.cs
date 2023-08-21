@@ -54,14 +54,15 @@ public class AnimationController : MonoBehaviour
         {
             playerAnimator.SetBool("isBrustMode", ShootingController.Instance.IsBrustMode());
         }
-/*        if (Player.Instance.IsWalking() && (ShootingController.Instance.IsBrustMode()))
-        {
+        playerAnimator.SetBool("isDieing", Player.Instance.isDieing);
+        /*        if (Player.Instance.IsWalking() && (ShootingController.Instance.IsBrustMode()))
+                {
 
-            playerAnimator.SetBool("isShootRuning", ShootingController.Instance.IsBrustMode())
-        }
-        if(Player.Instance.IsWalking() || (ShootingController.Instance.IsBrustMode()))
-        {
+                    playerAnimator.SetBool("isShootRuning", ShootingController.Instance.IsBrustMode())
+                }
+                if(Player.Instance.IsWalking() || (ShootingController.Instance.IsBrustMode()))
+                {
 
-        }*/
+                }*/
     }
 }

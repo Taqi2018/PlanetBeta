@@ -29,7 +29,7 @@ public class ShootingController : MonoBehaviour
     [SerializeField] public Transform ar, pistol, shotgun;
     [SerializeField] public float shotGunBulletAmount, arGunBulletAmount;
  
-    private bool isShooting;
+    public bool isShooting;
     [SerializeField] float shootingDelayTime;
     private bool isSingleMode, isBrustMode;
 
@@ -68,7 +68,7 @@ public class ShootingController : MonoBehaviour
     private void StopShootingEvent(object sender, EventArgs e)
     {
 
-        Debug.Log("stop it fucker!!!");
+
         isShooting = false;
         isBrustMode = false;
     }
@@ -120,12 +120,12 @@ public class ShootingController : MonoBehaviour
 
     private void Update()
     {
-        if (isShooting   & !Player.Instance.IsWalking())
+        if (isShooting & !Player.Instance.IsWalking())
         {
            
             if (lockUpdate == false)
             {
-                Debug.Log("Fire__");
+              
                 lockUpdate = true;
                 StartCoroutine(Fire());
                 Fire();
@@ -145,7 +145,7 @@ public class ShootingController : MonoBehaviour
 
         if (guns == Guns.Pistol)
         {
-            Debug.Log("Pistol");
+        
             pistol.gameObject.SetActive(true);
 /*            ar.gameObject.SetActive(false);
             shotgun.gameObject.SetActive(false);
@@ -159,7 +159,7 @@ public class ShootingController : MonoBehaviour
         {
             if (arGunBulletAmount > 0)
             {
-                Debug.Log("Ar");
+    
                 /*            pistol.gameObject.SetActive(false);
                             ar.gameObject.SetActive(true);
                             shotgun.gameObject.SetActive(false);*/
@@ -180,7 +180,7 @@ public class ShootingController : MonoBehaviour
         {
             if (shotGunBulletAmount > 0)
             {
-                Debug.Log("sg");
+         
                 /*            pistol.gameObject.SetActive(false);
                             ar.gameObject.SetActive(false);
                             shotgun.gameObject.SetActive(true);*/

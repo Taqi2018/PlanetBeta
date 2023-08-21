@@ -11,7 +11,7 @@ public class TargetRange : MonoBehaviour
 
     [SerializeField] private float checkRadius;
     [SerializeField] private LayerMask enemyLayer;
-    List<GameObject> enemies;
+    public List<GameObject> enemies;
     List<GameObject> Shields;
     public event EventHandler OnNoEnemyInTarget;
     public class OnEnemyInTargetEventArgs : EventArgs
@@ -24,49 +24,41 @@ public class TargetRange : MonoBehaviour
         enemies = new List<GameObject>();
         Instance = this;
 
+        StartCoroutine(FalseShooting());
+
+    }
+    IEnumerator FalseShooting()
+    {
+
+        yield return new WaitForSeconds(2.0f);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, checkRadius, enemyLayer);
+        if (colliders.Length <= 0)
+        {
+
+        }
+    }
 
 
+    private void Update()
+    {
+        if (!Physics.CheckSphere(transform.position, transform.GetComponent<SphereCollider>().radius, enemyLayer))
+        {
+            OnNoEnemyInTarget?.Invoke(this, EventArgs.Empty);
+        }
     }
 
 
     private void OnTriggerStay(Collider other)
     {
-        /*        if (other.name == "Scorpian" | other.name == "Scorpian(Clone)")
-                {
-                    other.TryGetComponent(out Enemy e);
-
-                    if (!e.isScorpianDead & (other.transform.position - transform.position).magnitude < checkRadius)
-                    {
-
-                        enemies.Add(other.gameObject);
-
-                        OnEnemyInTarget?.Invoke(this, new OnEnemyInTargetEventArgs { enemyPosition = other.transform.position });
-                    }
-                    else
-                    {
-                     //   if (!e.isScorpianDead)
-                       // {
-                            bool noEnemiesInRadius = !Physics.CheckSphere(transform.position, transform.GetComponent<SphereCollider>().radius, enemyLayer);
-                            if (noEnemiesInRadius)
-                            {
-                                ///    StartCoroutine(DelayForStopShooting());
-                                OnNoEnemyInTarget?.Invoke(this, EventArgs.Empty);
-                            }
-                      //  }
-             *//*           else
-                        {
-                            OnNoEnemyInTarget?.Invoke(this, EventArgs.Empty);
-                        }*//*
-                    }
-                }*/
 
 
-        if (other.name == "Alien" | other.name == "Alien(Clone)")
+    /*    if (other.name == "Alien" | other.name == "Alien(Clone)")
         {
             other.TryGetComponent(out Enemy e);
 
             if (!e.isAlienDead & (other.transform.position - transform.position).magnitude < checkRadius)
             {
+
 
                 enemies.Add(other.gameObject);
 
@@ -80,12 +72,12 @@ public class TargetRange : MonoBehaviour
                 bool noEnemiesInRadius = Physics.CheckSphere(transform.position, transform.GetComponent<SphereCollider>().radius, enemyLayer);
                 if (noEnemiesInRadius)
                 {
-                  
+
                     OnNoEnemyInTarget?.Invoke(this, EventArgs.Empty);
                 }
             }
 
-        }
+        }*/
 
 
 
@@ -95,68 +87,96 @@ public class TargetRange : MonoBehaviour
 
             if (!e.isScorpianDead & (other.transform.position - transform.position).magnitude < checkRadius)
             {
-
-                enemies.Add(other.gameObject);
-
-                OnEnemyInTarget?.Invoke(this, new OnEnemyInTargetEventArgs { enemyPosition = other.transform.position });
-
-
-            }
-            else
-            {
-
-                bool noEnemiesInRadius = Physics.CheckSphere(transform.position, transform.GetComponent<SphereCollider>().radius, enemyLayer);
-                if (noEnemiesInRadius)
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, (other.transform.position - transform.position), out hit, checkRadius))
                 {
+                    if (hit.transform.tag != "wall")
+                    {
 
-                    OnNoEnemyInTarget?.Invoke(this, EventArgs.Empty);
+                        enemies.Add(other.gameObject);
+
+                        OnEnemyInTarget?.Invoke(this, new OnEnemyInTargetEventArgs { enemyPosition = other.transform.position });
+
+                    }
                 }
+
+
+
             }
+
+
 
         }
-
-
 
 
         if (other.name == "Drone" | other.name == "Drone(Clone)")
         {
             other.TryGetComponent(out Enemy e);
 
-            if (!e.isDroneDead & (other.transform.position - transform.position).magnitude < checkRadius)
+            if (!e.isScorpianDead & (other.transform.position - transform.position).magnitude < checkRadius)
             {
-
-                enemies.Add(other.gameObject);
-
-                OnEnemyInTarget?.Invoke(this, new OnEnemyInTargetEventArgs { enemyPosition = other.transform.position });
-
-
-            }
-            else
-            {
-
-                bool noEnemiesInRadius = Physics.CheckSphere(transform.position, transform.GetComponent<SphereCollider>().radius, enemyLayer);
-                if (noEnemiesInRadius)
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, (other.transform.position - transform.position), out hit, checkRadius))
                 {
-                //    StartCoroutine(DelayForStopShooting());
-                    OnNoEnemyInTarget?.Invoke(this, EventArgs.Empty);
+                    if (hit.transform.tag != "wall")
+                    {
+
+                        enemies.Add(other.gameObject);
+
+                        OnEnemyInTarget?.Invoke(this, new OnEnemyInTargetEventArgs { enemyPosition = other.transform.position });
+
+                    }
                 }
+
+
+
             }
+
+
 
         }
 
 
 
+        if (other.name == "Alien" | other.name == "Alien(Clone)")
+        {
+            other.TryGetComponent(out Enemy e);
+
+            if (!e.isAlienDead & (other.transform.position - transform.position).magnitude < checkRadius)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, (other.transform.position - transform.position), out hit, checkRadius))
+                {
+                    if (hit.transform.tag != "wall")
+                    {
+
+                        enemies.Add(other.gameObject);
+
+                        OnEnemyInTarget?.Invoke(this, new OnEnemyInTargetEventArgs { enemyPosition = other.transform.position });
+
+                    }
+                }
+
+
+
+            }
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
     }
-
-    
-
-
-
-
-
-
-
-
 }
 
 

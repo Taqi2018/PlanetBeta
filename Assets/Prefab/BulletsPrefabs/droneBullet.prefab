@@ -4891,6 +4891,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyBulletSpeed: 30
+  damage: 10
 --- !u!65 &7517937399212605129
 BoxCollider:
   m_ObjectHideFlags: 0

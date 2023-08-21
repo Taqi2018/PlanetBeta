@@ -13,7 +13,8 @@ public class LoadingManager : MonoBehaviour
 
      public IEnumerator GoToGameplay()
      {
-          yield return new WaitForSeconds(10f);
+        Time.timeScale = 1f;
+          yield return new WaitForSeconds(1.5f);
           SceneManager.LoadScene(2);
      }
 

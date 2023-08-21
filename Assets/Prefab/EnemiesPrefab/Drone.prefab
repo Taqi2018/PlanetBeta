@@ -345,8 +345,8 @@ MonoBehaviour:
   enemyBulletPrefab: {fileID: 6729741511416871233, guid: 90e234b366087964ab9d7c8221b7eaae,
     type: 3}
   enemyBulletSpeed: 3
-  maxHealth: 3
-  health: 0
+  maxHealth: 30
+  health: 30
   HealthBar: {fileID: 7131842400810388479}
   shootDir: {x: 0, y: 0, z: 0}
   isScorpianDead: 0
@@ -354,6 +354,9 @@ MonoBehaviour:
   isDroneDead: 0
   droneHitEffect: {fileID: 623728936560265580}
   animationDeathTime: 3
+  scorpianDamge: 0
+  enemyDead: 0
+  alienSpawnEffect: {fileID: 0}
 --- !u!65 &-2786347463530397519
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -748,10 +751,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyHealthBar
       objectReference: {fileID: 0}
+    - target: {fileID: 7223981775367134133, guid: cc5f69a54384b8945b4e5cb39da59605,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7223981776072973729, guid: cc5f69a54384b8945b4e5cb39da59605,
         type: 3}
       propertyPath: maxHealth
-      value: 2
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7223981776072973735, guid: cc5f69a54384b8945b4e5cb39da59605,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7223981777434426515, guid: cc5f69a54384b8945b4e5cb39da59605,
         type: 3}

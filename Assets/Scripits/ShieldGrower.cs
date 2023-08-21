@@ -2,14 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class ShieldGrower : MonoBehaviour
 {
     public static ShieldGrower Instance { get;private  set; }
+    public event EventHandler <OnShieldPartActioavtionEventArgs>OnShieldPartActivation;
+
+    public class OnShieldPartActioavtionEventArgs : EventArgs
+    {
+       public GameObject shieldPart;
+    }
     public Transform shieldPartToActivate;
    [SerializeField] GameObject shield;
     [SerializeField] float shieldPartActivationDelay;
     private int shieldPartNo;
+    int totalShieldPartActive;
     public List<GameObject>activeShieldParts;
     public int ShieldPartNo()
     {
@@ -52,11 +59,36 @@ public class ShieldGrower : MonoBehaviour
 
             if (!part.activeInHierarchy)
             {
-             
+                totalShieldPartActive++;
+                if (part.name == "Part32"  && SceneManager.GetActiveScene().name=="Level1" )
+                {
+                    Level1EnemySpawner.Instance.CheckLevelCompeletion();
+                }
+                if (part.name == "Part32" && SceneManager.GetActiveScene().name == "Level2")
+                {
+                    Level2EnemySpawner.Instance.CheckLevelCompeletion();
+                }
+                if (part.name == "Part32" && SceneManager.GetActiveScene().name == "Level3")
+                {
+                    Level2EnemySpawner.Instance.CheckLevelCompeletion();
+                }
+                if (part.name == "Part32" && SceneManager.GetActiveScene().name == "Level4")
+                {
+                    Level2EnemySpawner.Instance.CheckLevelCompeletion();
+                }
+                if (part.name == "Part32" && SceneManager.GetActiveScene().name == "Level5")
+                {
+                    Level2EnemySpawner.Instance.CheckLevelCompeletion();
+                }
+                if (part.name == "Part32" && SceneManager.GetActiveScene().name == "Level6")
+                {
+                    Level2EnemySpawner.Instance.CheckLevelCompeletion();
+                }
                 part.SetActive(true);
                 break;
 
             }
+
            
         }
         // shieldPartToActivate.gameObject.SetActive(true);

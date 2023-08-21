@@ -6,6 +6,7 @@ public class EnemyBullet : MonoBehaviour
 {
     [SerializeField]
     float enemyBulletSpeed;
+    public float damage;
 
     // Start is called before the first frame update
     void Start()
@@ -28,13 +29,13 @@ public class EnemyBullet : MonoBehaviour
         if (other.tag == "wall")
         {
             Destroy(transform.gameObject);
-            Debug.Log("enemywalls");
+        
         }
         
         if (other.transform.TryGetComponent(out Player player))
         {
             Debug.Log(other.transform.name);
-            Player.Instance.health = Player.Instance.health - 10;
+            Player.Instance.health = Player.Instance.health - damage;
             player.playerHealthBar.SetHealthBar(Player.Instance.health);
             Destroy(transform.gameObject);
        

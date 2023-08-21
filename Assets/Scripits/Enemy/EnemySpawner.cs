@@ -9,9 +9,14 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] Transform floor;
     [SerializeField]Transform alien;
     [SerializeField] Transform drone;
-    public Transform Level1Sp1, Level1Sp2, Level1Ap1;
+    public Transform Level1Sp1, Level1Sp2, Level1Ap1,Level1Sp3;
     public List<GameObject> alienSpawnPoints, scorpianSpawnPoints, DroneSpawnPoints;
     public ParticleSystem alienSpawnEffect;
+    int levelNo;
+    private int level1ScorpianSwamps;
+    public Transform Level1Map;
+    int noOfSwampsOfLevel1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,25 +25,97 @@ public class EnemySpawner : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "GameScene")
         {
-            alienSpawnPoints = new List<GameObject>();
-            scorpianSpawnPoints = new List<GameObject>();
-
-            alienSpawnPoints.Add( Level1Ap1.gameObject);
-            scorpianSpawnPoints.Add(Level1Sp1.gameObject);
-            scorpianSpawnPoints.Add(Level1Sp2.gameObject);
-
-
+            levelNo = 1;
             Debug.Log("Level1");
 
+     
 
-            LoopTheScorpianSpawn();
-            LoopTheAlienGroup();
-            LoopTheDroneSpawn();
+
         }
-        /*     LoopTheScorpianSpawn();
-            // LoopTheDroneSpawn();
-             LoopTheAlienGroup();*/
+
     }
+
+
+    void Level1Loader()
+    {
+        noOfSwampsOfLevel1 = 3;
+        scorpianSpawnPoints = new List<GameObject>();
+
+
+        scorpianSpawnPoints.Add(Level1Sp1.gameObject);
+        scorpianSpawnPoints.Add(Level1Sp2.gameObject);
+        scorpianSpawnPoints.Add(Level1Sp3.gameObject);
+
+        Level1Map.gameObject.SetActive(true);
+        StartCoroutine(Level1TimeDelayBetweenS_Swamps());
+
+    }
+
+
+    //Rules S=1-->3  A=5->8  D=-->5->12
+
+
+
+
+
+
+    IEnumerator Level1TimeDelayBetweenS_Swamps()
+    {
+        noOfSwampsOfLevel1--;
+        int randomScorpianSpwanTime = UnityEngine.Random.Range(3, 6);
+        yield return new WaitForSeconds(randomScorpianSpwanTime);
+        ProduceLevel1Scorpian();
+    }
+
+
+
+    void ProduceLevel1Scorpian()
+    {
+        int HowManyAliens = 5;
+        Vector3 SpawnAreaVector = Vector3.zero;
+        if (scorpianSpawnPoints.Count == 1)
+        {
+            SpawnAreaVector = scorpianSpawnPoints[0].transform.position;
+            scorpianSpawnPoints.Remove(scorpianSpawnPoints[0]);
+        }
+        if (scorpianSpawnPoints.Count > 1)
+        {
+            foreach (GameObject a in scorpianSpawnPoints)
+            {
+                SpawnAreaVector = a.transform.position;
+
+                scorpianSpawnPoints.Remove(a);
+                break;
+            }
+        }
+
+        for (int i = 0; i < HowManyAliens; i++)
+        {
+
+            Instantiate(smallGreenScorpians, new Vector3(SpawnAreaVector.x + VariationInSpawnPosition(), 5, SpawnAreaVector.z + VariationInSpawnPosition()), Quaternion.identity);
+        }
+
+        if (noOfSwampsOfLevel1 > 0)
+        {
+            StartCoroutine(Level1TimeDelayBetweenS_Swamps());
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private void LoopTheAlienGroup()
     {
@@ -112,14 +189,6 @@ public class EnemySpawner : MonoBehaviour
 
     }
 
-    private void LoopTheScorpianSpawn()
-    {
-        StartCoroutine(RandomScorpianSpawnTimer());
-   
-
-
-
-    }
 
     private void LoopTheDroneSpawn()
     {
@@ -158,41 +227,10 @@ public class EnemySpawner : MonoBehaviour
 
    
 
-        /*
-                for (int i = 0; i <= HowManyDrones; i++)
-                {
-                    Instantiate(drone, , Quaternion.identity);
-                }*/
     }
 
 
 
-
-/*
-    private void SpwanDroneGroup()
-    {
-
-        //float[] values;
-        int HowManyDrones = UnityEngine.Random.Range(2, 3);
-        Vector3 SpawnAreaVector = GetRandomSpawnVector();
-        Vector3[] SpawnVectorsByIndex;
-        SpawnVectorsByIndex = new Vector3[HowManyDrones];
-        Vector3 singleDronePosition;
-
-        for (int i = 0; i < HowManyDrones; i++)
-        {
-            singleDronePosition = new Vector3(SpawnAreaVector.x + VariationInSpawnPosition(), 5, SpawnAreaVector.z + VariationInSpawnPosition());
-            Instantiate(alien, singleDronePosition, Quaternion.identity);
-        }
-
-
-
-        *//*
-                for (int i = 0; i <= HowManyDrones; i++)
-                {
-                    Instantiate(drone, , Quaternion.identity);
-                }*//*
-    }*/
 
     private Vector3 GetRandomSpawnVector()
     {
@@ -216,21 +254,54 @@ public class EnemySpawner : MonoBehaviour
         int randomScorpianSpwanTime = UnityEngine.Random.Range(3, 6);
         yield return new WaitForSeconds(randomScorpianSpwanTime);
 
-
-        if (scorpianSpawnPoints.Count > 0)
+        if (levelNo == 1)
         {
-            SpwanGreenScorpian();
-            LoopTheScorpianSpawn();
+            if (level1ScorpianSwamps <= 5)
+            {
+                level1ScorpianSwamps++;
+
+
+                if (scorpianSpawnPoints.Count > 0)
+                {
+                    SpwanGreenScorpian();
+                    LoopTheScorpianSpawn();
+                }
+                Debug.Log("Swamp OF LEVEL 1");
+            }
+            else
+            {
+                levelNo = 2;
+                Debug.Log("No enemy left");
+            }
+            
+        }
+        else
+        {
+
+            if (scorpianSpawnPoints.Count > 0)
+            {
+                SpwanGreenScorpian();
+                LoopTheScorpianSpawn();
+            }
+
         }
 
 
     }
+    private void LoopTheScorpianSpawn()
+    {
+        StartCoroutine(RandomScorpianSpawnTimer());
 
- 
+
+
+
+    }
+
+
     private void SpwanGreenScorpian()
     {
 
-        int HowManyAliens = UnityEngine.Random.Range(8, 19);
+        int HowManyAliens = UnityEngine.Random.Range(1, 1);
         Vector3 SpawnAreaVector = Vector3.zero;
         if (scorpianSpawnPoints.Count == 1)
         {
@@ -242,17 +313,56 @@ public class EnemySpawner : MonoBehaviour
             foreach (GameObject a in scorpianSpawnPoints)
             {
                 SpawnAreaVector = a.transform.position;
-                Debug.Log(a.name);
+           
                 scorpianSpawnPoints.Remove(a);
                 break;
             }
         }
 
-        Instantiate(smallGreenScorpians,SpawnAreaVector,Quaternion.identity);
+        for (int i = 0; i < HowManyAliens; i++)
+        {
+           
+            Instantiate(smallGreenScorpians, new Vector3(SpawnAreaVector.x + VariationInSpawnPosition(), 5, SpawnAreaVector.z + VariationInSpawnPosition()), Quaternion.identity);
+        }
 
+        if (levelNo == 1)
+        {
+            LevelLoader(1);
+        }
     }
 
+    void LevelLoader(int LevelNo)
+    {
+        if (levelNo == 1)
+        {
+            RandomScorpianSpawnTimer();
+        }
+        if (levelNo == 2)
+        {
 
+        }
+        
+        if (levelNo == 3)
+        {
+
+        }
+        if (levelNo == 4)
+         {
+
+        }
+
+
+        if (levelNo == 3)
+        {
+
+       }
+       if (levelNo == 4){
+
+         }
+
+
+        
+    }
     
 
     // Update is called once per frame
@@ -260,4 +370,7 @@ public class EnemySpawner : MonoBehaviour
     {
         
     }
+
+
+
 }

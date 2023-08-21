@@ -36,10 +36,10 @@ public class BulletMovement : MonoBehaviour
     {
         if (other.tag == "wall")
         {
-            Debug.Log(transform.name+"__");
+        
             if (transform.name == "shotGunBullet(Clone)")
             {
-                Debug.Log("shotGunEffect");
+      
                 Instantiate(bulletHitShotGunEffect, other.transform.position - Vector3.forward + Vector3.up, Quaternion.identity);
                 bulletHitShotGunEffect.transform.gameObject.SetActive(true);
                 bulletHitShotGunEffect.Play();
@@ -56,7 +56,7 @@ public class BulletMovement : MonoBehaviour
                 bulletHitPistolEffect.transform.gameObject.SetActive(true);
                 bulletHitPistolEffect.Play();
             }
-            Debug.Log("bullet");
+   
           
             Destroy(gameObject);
 

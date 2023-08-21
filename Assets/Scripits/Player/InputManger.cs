@@ -113,7 +113,7 @@ public class InputManger : MonoBehaviour
         if (context.canceled)
         {
             OnJoyStickMovement?.Invoke(this, new onChangePositionEventArgs { position =Vector2.zero });
-            Debug.Log(position);
+
         }
         else
         {

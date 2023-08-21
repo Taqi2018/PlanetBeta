@@ -771,18 +771,24 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   playerChasingRange: 0
-  attackDelay: 1
-  attackingRangeForShield: 6
+  attackDelay: 2
+  attackingRangeForShield: 9
   alienShootingPoint: {fileID: 2924003601301020268, guid: 597108fe254789f44988cfe26c610152,
     type: 3}
   enemyBulletPrefab: {fileID: 7041224808858871873}
   enemyBulletSpeed: 2
-  maxHealth: 2
+  maxHealth: 10
   health: 0
   HealthBar: {fileID: 3099354505109134439}
   shootDir: {x: 0, y: 0, z: 0}
   isScorpianDead: 0
+  isAlienDead: 0
+  isDroneDead: 0
+  droneHitEffect: {fileID: 0}
   animationDeathTime: 2
+  scorpianDamge: 10
+  enemyDead: 0
+  alienSpawnEffect: {fileID: 0}
 --- !u!65 &7003752844576415332
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -794,8 +800,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.057844, y: 0.95753783, z: 1.9003167}
-  m_Center: {x: -0.043197036, y: 0.45950463, z: 0.13842654}
+  m_Size: {x: 2.057844, y: 0.86294574, z: 1.9003167}
+  m_Center: {x: -0.043197036, y: 0.5068007, z: 0.13842654}
 --- !u!195 &7003752844576415335
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -806,7 +812,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 5
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -1765,12 +1771,17 @@ PrefabInstance:
     - target: {fileID: 2879312817587502539, guid: e8b4116a5803b4147a802b68195b8a7e,
         type: 3}
       propertyPath: maxHealth
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2879312818024676314, guid: e8b4116a5803b4147a802b68195b8a7e,
         type: 3}
       propertyPath: cam
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2879312818024676316, guid: e8b4116a5803b4147a802b68195b8a7e,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2879312818024676318, guid: e8b4116a5803b4147a802b68195b8a7e,
         type: 3}
@@ -1881,6 +1892,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: sHealthBar (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2879312818024676319, guid: e8b4116a5803b4147a802b68195b8a7e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2879312818382707961, guid: e8b4116a5803b4147a802b68195b8a7e,
         type: 3}

@@ -19,7 +19,8 @@ public class Player : MonoBehaviour
 
     public static Player Instance { private set; get; }
     private bool isPlayerSelected;
-    private bool isWalking;
+   public bool isWalking;
+    public bool isDieing;
     private Vector3 movementVector2d;
     Vector3 moveDir;
     [SerializeField] float playerSpeed, playerRotationSpeed;
@@ -54,7 +55,7 @@ public class Player : MonoBehaviour
 
         if (Vector2.Equals(e.inputVector, Vector2.zero))
         {
-            Debug.Log(e.inputVector);
+    
             isWalking = false;
         }
         else
@@ -100,6 +101,7 @@ public class Player : MonoBehaviour
         float rangeToDetectCollision = playerSpeed * Time.deltaTime;
       
         bool isCollide = Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDir,out RaycastHit hit,rangeToDetectCollision);
+      //  Debug.Log(hit.transform.name);
    /*     if(hit.transform.TryGetComponent(out MedPack m))
         {
             if (m != null)

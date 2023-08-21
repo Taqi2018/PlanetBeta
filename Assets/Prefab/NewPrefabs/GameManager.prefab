@@ -44,51 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 860c4cc322fdd1444b0e78c9f61bf762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1468500274532273118
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1468500274532273113}
-  - component: {fileID: 1468500274532273112}
-  m_Layer: 0
-  m_Name: SkyBoxManger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1468500274532273113
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1468500274532273118}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.487251, y: -5.1601615, z: 25.476213}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1468500275841251522}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1468500274532273112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1468500274532273118}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a30508040999f3546a76e2cf9b3ed52b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 2
 --- !u!1 &1468500274693167155
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,7 +75,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1468500275841251522}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1468500274693167164
 MonoBehaviour:
@@ -421,7 +376,6 @@ Transform:
   - {fileID: 1468500275843451495}
   - {fileID: 1468500275287963352}
   - {fileID: 1468500274437537698}
-  - {fileID: 1468500274532273113}
   - {fileID: 1468500274693167154}
   - {fileID: 4754054602416758583}
   - {fileID: 4754054602532903457}
@@ -481,9 +435,12 @@ MonoBehaviour:
   Level1Sp1: {fileID: 4754054602416758583}
   Level1Sp2: {fileID: 4754054602532903457}
   Level1Ap1: {fileID: 4754054603328898557}
+  Level1Sp3: {fileID: 0}
   alienSpawnPoints: []
   scorpianSpawnPoints: []
   DroneSpawnPoints: []
+  alienSpawnEffect: {fileID: 0}
+  Level1Map: {fileID: 0}
 --- !u!1 &4754054602416758576
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,7 +470,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1468500275841251522}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4754054602532903458
 GameObject:
@@ -544,7 +501,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1468500275841251522}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4754054603328898558
 GameObject:
@@ -575,5 +532,5 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1468500275841251522}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

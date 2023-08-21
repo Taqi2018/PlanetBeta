@@ -71,6 +71,10 @@ MonoBehaviour:
   isDroneDead: 0
   droneHitEffect: {fileID: 0}
   animationDeathTime: 3
+  scorpianDamge: 0
+  enemyDead: 0
+  alienSpawnEffect: {fileID: 5497491274514889352, guid: 40265e3699845414a86065fe3003e653,
+    type: 3}
 --- !u!195 &5869847030512439337
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -89,8 +93,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
+  m_Height: 3
+  m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!65 &5869847030512439340
@@ -104,8 +108,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5161059, y: 4.595795, z: 1.4124959}
-  m_Center: {x: -0.0408746, y: 2.3, z: 0.20624793}
+  m_Size: {x: 2.732876, y: 5.709653, z: 1.4124959}
+  m_Center: {x: 0.1503185, y: 2.285049, z: 0.20624793}
 --- !u!1001 &1950213698
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -293,6 +297,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemyHealthBar (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 593759737263084598, guid: 88ebc35126b919d42a25e249fb245126,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 593759737263084599, guid: 88ebc35126b919d42a25e249fb245126,
         type: 3}
