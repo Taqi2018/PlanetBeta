@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] Slider barSlider;
+
     public float maxHealth;
 
 
@@ -16,6 +17,9 @@ public class HealthBar : MonoBehaviour
         barSlider.maxValue = maxHealth;
         barSlider.value = barSlider.maxValue;
 
+     
+   
+
 
 
     }
@@ -24,6 +28,8 @@ public class HealthBar : MonoBehaviour
     {
         barSlider.value = health;
     }
+
+
 
     // Update is called once per frame
     void Update()

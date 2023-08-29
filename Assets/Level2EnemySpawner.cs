@@ -5,8 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class Level2EnemySpawner : MonoBehaviour
 {
+    public List<GameObject> enemiesOnField;
     public static Level2EnemySpawner Instance;
-    [SerializeField] private int scorpianSwampAttacks;//2
+    [SerializeField] public int scorpianSwampAttacks;//2
     [SerializeField] private GameObject scorpian;
     [SerializeField] private GameObject alien;
     [SerializeField] private GameObject drone;
@@ -24,11 +25,20 @@ public class Level2EnemySpawner : MonoBehaviour
     [SerializeField] float laserDamgeForLevel3;
     [SerializeField] float alienDamgeForLevel3;
     [SerializeField] float shotGunDamgeLevel6;
+   public  bool isNotLock;
+    private float boostShiledTime;
+    public bool isShieldBooster;
+    private bool isOk;
+    private int isCounter;
+
     /* p alienSpawnEffect;*/
 
     // Start is called before the first frame update
     void Start()
     {
+        isCounter = 0;
+        isOk = true;
+        isNotLock = true;
         if (SceneManager.GetActiveScene().name == "Level2")
         {
             pistolButton.gameObject.SetActive(true);
@@ -103,10 +113,20 @@ public class Level2EnemySpawner : MonoBehaviour
             scorpianSpawnPoints.Add(Level5sp.gameObject);
         }
         // ShieldGrower.Instance.OnShieldPartActivation += CheckLevelCompeletion;
-        StartCoroutine(Level1TimeDelayBetweenS_Swamps());
+       
         LoadShields();
 
+        StartCoroutine(LevelCompeletionForced());
+    }
 
+    private IEnumerator LevelCompeletionForced()
+    {
+        yield return new WaitForSeconds(5.0f);
+        if (scorpianSwampAttacks <= 0 && enemiesOnField.Count == 0 )
+        {
+            GameplayUIManager.Instance.LevelCompletePanel();
+        }
+        StartCoroutine(LevelCompeletionForced());
     }
 
     public void CheckLevelCompeletion()
@@ -117,12 +137,16 @@ public class Level2EnemySpawner : MonoBehaviour
 
         if (countShieldCompletion == ships.Length)
         {
-            levelComplete = true;
+            if (scorpianSwampAttacks <= 0 && enemiesOnField.Count == 0)
+            {
+                levelComplete = true;
+            }
             if (levelComplete)
             {
 
                 levelComplete = false;
-                GameplayUIManager.Instance.LevelCompletePanel();
+                StartCoroutine(LevelCompDelay());
+      
 
 
                 /*
@@ -134,6 +158,12 @@ public class Level2EnemySpawner : MonoBehaviour
         }
 
 
+    }
+
+    private IEnumerator LevelCompDelay()
+    {
+        yield return new WaitForSeconds(2.0f);
+        GameplayUIManager.Instance.LevelCompletePanel();
     }
 
     private void LoadShields()
@@ -150,9 +180,25 @@ public class Level2EnemySpawner : MonoBehaviour
     {
 
 
-        int randomScorpianSpwanTime = UnityEngine.Random.Range(2, delayBetweenEachSwamp);
-        yield return new WaitForSeconds(randomScorpianSpwanTime);
-        ProduceLevel1Scorpian();
+        int randomScorpianSpwanTime = delayBetweenEachSwamp;
+
+        if (enemiesOnField.Count == 0)
+        {
+            yield return new WaitForSeconds(randomScorpianSpwanTime);
+            ProduceLevel1Scorpian();
+
+
+        }
+     
+ 
+    }
+
+    public void checkNoEnemyLeftToSpawnNewWave()
+    {
+        if (enemiesOnField.Count == 0)
+        {
+            isNotLock = true;
+        }
     }
 
 
@@ -164,59 +210,32 @@ public class Level2EnemySpawner : MonoBehaviour
         HowManyScorpians = Random.Range(1, maxRangeOfScorpians);
         for (int i = 0; i <= HowManyScorpians; i++)
         {
-            Instantiate(scorpian, new Vector3(Level1Sp1.transform.position.x + VariationInSpawnPosition(), 5, Level1Sp1.transform.position.z + VariationInSpawnPosition()), Quaternion.identity);
-            Instantiate(scorpian, new Vector3(Level1Sp2.transform.position.x + VariationInSpawnPosition(), 5, Level1Sp2.transform.position.z + VariationInSpawnPosition()), Quaternion.identity);
+            Debug.Log(i + " No ");
+            GameObject e=  Instantiate(scorpian, new Vector3(Level1Sp1.transform.position.x + VariationInSpawnPosition(), 5, Level1Sp1.transform.position.z + VariationInSpawnPosition()), Quaternion.identity);
+            enemiesOnField.Add(e);
          
-     
-            Instantiate(alien, new Vector3(Level1Sp3.transform.position.x + VariationInSpawnPosition(), 5, Level1Sp3.transform.position.z + VariationInSpawnPosition()), Quaternion.identity);
+            GameObject f=Instantiate(scorpian, new Vector3(Level1Sp2.transform.position.x + VariationInSpawnPosition(), 5, Level1Sp2.transform.position.z + VariationInSpawnPosition()), Quaternion.identity);
+            enemiesOnField.Add(f);
+
+
+
+            GameObject z = Instantiate(alien, new Vector3(Level1Sp3.transform.position.x + VariationInSpawnPosition(), 5, Level1Sp3.transform.position.z + VariationInSpawnPosition()), Quaternion.identity);
+            enemiesOnField.Add(z);
             if (SceneManager.GetActiveScene().name == "Level5" || SceneManager.GetActiveScene().name == "Level6")
             {
-                Instantiate(drone, new Vector3(Level5sp.transform.position.x + VariationInSpawnPosition(), 5, Level1Sp3.transform.position.z + VariationInSpawnPosition()), Quaternion.identity);
+                GameObject g=  Instantiate(drone, new Vector3(Level5sp.transform.position.x + VariationInSpawnPosition(), 5, Level1Sp3.transform.position.z + VariationInSpawnPosition()), Quaternion.identity);
+             
+                enemiesOnField.Add(g);
             }
-            if (SceneManager.GetActiveScene().name == "Level6")
+        /*    if (SceneManager.GetActiveScene().name == "Level6")
             {
-                Instantiate(drone, new Vector3(Level5sp.transform.position.x + VariationInSpawnPosition(), 5, Level1Sp3.transform.position.z + VariationInSpawnPosition()), Quaternion.identity);
-            }
+                GameObject h= Instantiate(drone, new Vector3(Level5sp.transform.position.x + VariationInSpawnPosition(), 5, Level1Sp3.transform.position.z + VariationInSpawnPosition()), Quaternion.identity);
+                enemiesOnField.Add(h);
+            }*/
         }
         scorpianSwampAttacks--;
-        if (scorpianSwampAttacks > 0)
-        {
-            StartCoroutine(Level1TimeDelayBetweenS_Swamps());
 
-        }
 
-        /*   Vector3 SpawnAreaVector1 = Vector3.zero;
-           Vector3 SpawnAreaVector2= Vector3.zero;
-           Vector3 SpawnAreaVector3 = Vector3.zero;*/
-        /* if (scorpianSpawnPoints.Count == 1)
-         {
-             SpawnAreaVector = scorpianSpawnPoints[0].transform.position;
-             scorpianSpawnPoints.Remove(scorpianSpawnPoints[0]);
-         }
-         if (scorpianSpawnPoints.Count > 1)
-         {
-             foreach (GameObject a in scorpianSpawnPoints)
-             {
-                 SpawnAreaVector = a.transform.position;
-
-                 scorpianSpawnPoints.Remove(a);
-                 break;
-             }
-         }
-
-         for (int i = 0; i < HowManyScorpians; i++)
-         {
-
-             Debug.Log("producing....");
-
-             Instantiate(scorpian, new Vector3(SpawnAreaVector.x + VariationInSpawnPosition(), 5, SpawnAreaVector.z + VariationInSpawnPosition()), Quaternion.identity);
-         }
-
-         if (scorpianSwampAttacks> 0)
-         {
-             StartCoroutine(Level1TimeDelayBetweenS_Swamps());
-         }
- */
 
     }
 
@@ -231,6 +250,24 @@ public class Level2EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (enemiesOnField.Count == 0 & scorpianSwampAttacks > 0 & isNotLock)
+        {
+            isNotLock = false;
+            StartCoroutine(Level1TimeDelayBetweenS_Swamps());
+        }
+
+        if (scorpianSwampAttacks <= 0 && enemiesOnField.Count == 0 &isCounter < ships.Length)
+        {
+            isCounter++;
+         
+            CheckLevelCompeletion();
+        }
+   
+
+
+      
 
     }
+
+
 }

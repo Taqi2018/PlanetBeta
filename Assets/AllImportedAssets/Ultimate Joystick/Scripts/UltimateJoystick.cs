@@ -95,6 +95,8 @@ public class UltimateJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler
 		}
 	}
 
+	
+
 	void Start ()
 	{
 		// If the game is not running then return.
@@ -729,9 +731,10 @@ public class UltimateJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler
 
 	#if UNITY_EDITOR
 	void Update ()
-	{
+	{/*, tensionAccentDown;
+	 Image tensionAccentLeft, tensionAccentRight;*/
 		// Keep the joystick updated while the game is not being played.
-		if( Application.isPlaying == false )//&& UnityEditor.Selection.activeGameObject != gameObject )
+		if ( Application.isPlaying == false )//&& UnityEditor.Selection.activeGameObject != gameObject )
 			UpdateSizeAndPlacement();
 	}
 	#endif
@@ -1039,5 +1042,7 @@ public class UltimateJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler
 
 		UltimateJoysticks[ joystickName ].EnableJoystick();
 	}
+
+	
 	/* ------------------------------------------- *** END STATIC FUNCTIONS FOR THE USER *** ------------------------------------------- */
 }

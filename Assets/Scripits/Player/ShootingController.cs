@@ -42,6 +42,7 @@ public class ShootingController : MonoBehaviour
     {
         
         guns = Guns.Pistol;
+
         pistol.gameObject.SetActive(true);
         ar.gameObject.SetActive(false);
         shotgun.gameObject.SetActive(false);
@@ -140,8 +141,8 @@ public class ShootingController : MonoBehaviour
     {
         isBrustMode = true;
         
-        bulletInstantiateParticles.gameObject.SetActive(true);
-        bulletInstantiateParticles.Play();
+
+    
 
         if (guns == Guns.Pistol)
         {
@@ -152,7 +153,9 @@ public class ShootingController : MonoBehaviour
             ar.gameObject.SetActive(true);*/
 
             Instantiate(pistolBulletPrefab, shootingPoint.position, Quaternion.LookRotation(shootDir, Vector3.up));
-          
+            bulletInstantiateParticles.gameObject.SetActive(true);
+            bulletInstantiateParticles.Play();
+
             SoundManager.Instance.Play("pistol");
         }
         if (guns == Guns.Ar)
@@ -167,6 +170,8 @@ public class ShootingController : MonoBehaviour
                 SoundManager.Instance.Play("ar");
                 GunSelectionUi.Instance.ArSlider();
                 arGunBulletAmount--;
+                bulletInstantiateParticles.gameObject.SetActive(true);
+                bulletInstantiateParticles.Play();
             }
             else
             {
@@ -188,6 +193,8 @@ public class ShootingController : MonoBehaviour
                 SoundManager.Instance.Play("shootGun");
                 GunSelectionUi.Instance.ShotGunSlider();
                 shotGunBulletAmount--;
+                bulletInstantiateParticles.gameObject.SetActive(true);
+                bulletInstantiateParticles.Play();
             }
             else
             {

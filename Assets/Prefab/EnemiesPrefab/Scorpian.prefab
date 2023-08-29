@@ -788,6 +788,8 @@ MonoBehaviour:
   animationDeathTime: 2
   scorpianDamge: 10
   enemyDead: 0
+  scorpianDieEffect: {fileID: 4745103215845860543, guid: c30e3555ad38c0348b98cb3145495c7d,
+    type: 3}
   alienSpawnEffect: {fileID: 0}
 --- !u!65 &7003752844576415332
 BoxCollider:

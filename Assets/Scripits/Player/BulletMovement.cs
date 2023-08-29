@@ -7,7 +7,7 @@ public class BulletMovement : MonoBehaviour
 {
     Rigidbody bulletRigidBody;
     [SerializeField] float bulletSpeed;
-    [SerializeField]public float damageOfWeapon;
+    [SerializeField] public float damageOfWeapon;
     [SerializeField] ParticleSystem bulletHitShotGunEffect, bulletHitArEffect, bulletHitPistolEffect;
 
     public static BulletMovement Instance;
@@ -16,30 +16,30 @@ public class BulletMovement : MonoBehaviour
     void Start()
     {
         Instance = this;
-      bulletRigidBody=  transform.GetComponent<Rigidbody>();
-  
+        bulletRigidBody = transform.GetComponent<Rigidbody>();
+
         bulletRigidBody.velocity = ShootingController.Instance.shootDir * bulletSpeed;
-     
-    //    StartCoroutine(BulletDieTime());
+
+            StartCoroutine(BulletDieTime());
 
 
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "wall")
         {
-        
+
             if (transform.name == "shotGunBullet(Clone)")
             {
-      
+
                 Instantiate(bulletHitShotGunEffect, other.transform.position - Vector3.forward + Vector3.up, Quaternion.identity);
                 bulletHitShotGunEffect.transform.gameObject.SetActive(true);
                 bulletHitShotGunEffect.Play();
@@ -56,57 +56,58 @@ public class BulletMovement : MonoBehaviour
                 bulletHitPistolEffect.transform.gameObject.SetActive(true);
                 bulletHitPistolEffect.Play();
             }
-   
-          
+
+
             Destroy(gameObject);
 
         }
-        
-/*        if (other.TryGetComponent(out Enemy enemy))
-        {
-            if (enemy != null)
-            {
 
-                enemy.health = enemy.health - damageOfWeapon;
-                enemy.HealthBar.SetHealthBar(enemy.health);
-                if (enemy.health <= 0)
+        /*        if (other.TryGetComponent(out Enemy enemy))
                 {
-                    if (enemy.name == "Scorpian" || enemy.name == "Scorpian(Clone)")
+                    if (enemy != null)
                     {
-                        enemy.isScorpianDead = true;
-                        // Destroy(enemy.gameObject);
-                        enemy.StopEnemy();
 
-                        StartCoroutine(DelayForDeathAnimation(enemy));
-                    }
-                    else
-                    {
-                        Destroy(enemy.gameObject);
-                    }
+                        enemy.health = enemy.health - damageOfWeapon;
+                        enemy.HealthBar.SetHealthBar(enemy.health);
+                        if (enemy.health <= 0)
+                        {
+                            if (enemy.name == "Scorpian" || enemy.name == "Scorpian(Clone)")
+                            {
+                                enemy.isScorpianDead = true;
+                                // Destroy(enemy.gameObject);
+                                enemy.StopEnemy();
 
-*/
+                                StartCoroutine(DelayForDeathAnimation(enemy));
+                            }
+                            else
+                            {
+                                Destroy(enemy.gameObject);
+                            }
+
+        */
 
 
-                }
-            
-}
+    }
 
 
-/*
-    IEnumerator DelayForDeathAnimation(Enemy e)
+
+
+
+    /*IEnumerator DelayForDeathAnimation(Enemy e)
     {
 
         yield return new WaitForSeconds(e.animationDeathTime);
-  
 
-            Destroy(e.gameObject);
-        
+
+        Destroy(e.gameObject);
+
         Destroy(transform.gameObject);
     }
-*/
-/*
+    */
+
     IEnumerator BulletDieTime()
     {
-        yield return new WaitForSeconds(20.0f);
+        yield return new WaitForSeconds(1.0f);
         Destroy(transform.gameObject);
-    }*/
+    }
+}

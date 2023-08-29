@@ -8,4 +8,7 @@ public class csParticleMove : MonoBehaviour
 	void Update () {
         transform.Translate(Vector3.back * speed);
 	}
+
+
+    
 }

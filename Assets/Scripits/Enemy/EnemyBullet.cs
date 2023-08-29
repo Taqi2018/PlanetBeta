@@ -36,6 +36,7 @@ public class EnemyBullet : MonoBehaviour
         {
             Debug.Log(other.transform.name);
             Player.Instance.health = Player.Instance.health - damage;
+            
             player.playerHealthBar.SetHealthBar(Player.Instance.health);
             Destroy(transform.gameObject);
        

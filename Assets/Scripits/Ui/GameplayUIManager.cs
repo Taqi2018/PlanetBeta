@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.SceneManagement;
 using System;
 
@@ -12,11 +13,18 @@ public class GameplayUIManager : MonoBehaviour
      public GameObject levelFailedPanel;
      public GameObject LevelPausePanel;
      public GameObject CongratulationsPanel;
+    public TextMeshProUGUI shotGunUnlock,laserGunUnlock;
     public static GameplayUIManager Instance;
-    public Canvas joystickCanvaus;
+    public GameObject joystickCanvaus;
+    public GameObject gunPanel;
 
     private void Start()
     {
+        if (SceneManager.GetActiveScene().name == "Level1")
+        {
+         joystickCanvaus.SetActive(false);
+           gunPanel.gameObject.SetActive(false);
+        }
         Instance = this;
   //      ShiedDestructionEvent.Instance.OnDestructionOfLastPart += LevelFailedPanel;
        // Enemy.Instance.OnGameOver += LevelFailPanelDueToPlayerDeath;
@@ -24,19 +32,19 @@ public class GameplayUIManager : MonoBehaviour
 
     public void LevelFailedPanel()
     {
-        joystickCanvaus.gameObject.SetActive(false);
+        joystickFum.Instance.gameObject.SetActive(false);
         levelFailedPanel.SetActive(true);
     }
     public void GameplayToPausePanel()
      {
-        joystickCanvaus.transform.gameObject.SetActive(false);
+        joystickFum.Instance.gameObject.SetActive(false);
         Time.timeScale = 0f;
           LevelPausePanel.SetActive(true);
      }
 
      public void PauseToGameplayPanel()
      {
-        joystickCanvaus.transform.gameObject.SetActive(true);
+        joystickFum.Instance.gameObject.SetActive(true);
         Time.timeScale = 1f;
         LevelPausePanel.SetActive(false);
      }
@@ -55,12 +63,27 @@ public class GameplayUIManager : MonoBehaviour
     }
     public void LevelCompletePanel()
     {
-        joystickCanvaus.gameObject.SetActive(false);
+        if (SceneManager.GetActiveScene().name == "Level2")
+        {
+            laserGunUnlock.gameObject.SetActive(true);
+        }
+        if (SceneManager.GetActiveScene().name == "Level5")
+        {
+            shotGunUnlock.gameObject.SetActive(true);
+        }
+       
         Time.timeScale = 0;
-        levelCompletePanel.gameObject.SetActive(true);
+        levelCompletePanel.SetActive(true);
+
     }
     public void NextLevel()
     {
+
+        if (SceneManager.GetActiveScene().name == "Level2" || SceneManager.GetActiveScene().name == "Level5")
+        {
+            laserGunUnlock.gameObject.SetActive(false);
+            shotGunUnlock.gameObject.SetActive(false);
+        }
         if (SceneManager.GetActiveScene().name == "Level6")
         {
             SceneManager.LoadScene("Level1");

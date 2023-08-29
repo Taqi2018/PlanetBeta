@@ -5,8 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class Level1EnemySpawner : MonoBehaviour
 {
+    public List<GameObject> enemiesOnField;
     public static Level1EnemySpawner Instance;
-    [SerializeField] private int scorpianSwampAttacks;//2
+    [SerializeField] public int scorpianSwampAttacks;//2
     [SerializeField] private GameObject scorpian;
     [SerializeField] private int delayBetweenEachSwamp;
     public List<GameObject> scorpianSpawnPoints;
@@ -19,9 +20,22 @@ public class Level1EnemySpawner : MonoBehaviour
     [SerializeField]Button pistolButton, LaserButton, ShotGunButton;
     [SerializeField] GameObject pistolBullet, LaserBullet, ShotGunBullet;
     [SerializeField]float PistolDamgeForLevel1;
+    public bool isNotLock;
+    public float boostShiledTime;
+    public bool isShieldBooster;
+    public void checkNoEnemyLeftToSpawnNewWave()
+    {
+        if (enemiesOnField.Count == 0)
+        {
+            isNotLock = true;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
+
+        isNotLock = true;
+        enemiesOnField = new List<GameObject>();
         if (SceneManager.GetActiveScene().name == "Level1")
         {
             pistolButton.gameObject.SetActive(true);
@@ -42,11 +56,12 @@ public class Level1EnemySpawner : MonoBehaviour
         scorpianSpawnPoints.Add(Level1Sp2.gameObject);
         scorpianSpawnPoints.Add(Level1Sp3.gameObject);
        // ShieldGrower.Instance.OnShieldPartActivation += CheckLevelCompeletion;
-        StartCoroutine(Level1TimeDelayBetweenS_Swamps());
+
         LoadShields();
 
 
     }
+    
 
     public  void CheckLevelCompeletion()
     {
@@ -87,11 +102,14 @@ public class Level1EnemySpawner : MonoBehaviour
 
     IEnumerator Level1TimeDelayBetweenS_Swamps()
     {
- 
 
+        Debug.Log(enemiesOnField.Count);
         int randomScorpianSpwanTime = UnityEngine.Random.Range(2, delayBetweenEachSwamp);
-        yield return new WaitForSeconds(randomScorpianSpwanTime);
-        ProduceLevel1Scorpian();
+      
+            yield return new WaitForSeconds(randomScorpianSpwanTime);
+            ProduceLevel1Scorpian();
+
+   
     }
 
 
@@ -103,16 +121,22 @@ public class Level1EnemySpawner : MonoBehaviour
         HowManyScorpians = Random.Range(1, maxRangeOfScorpians);
         for (int i = 0; i <= HowManyScorpians; i++)
         {
-            Instantiate(scorpian, new Vector3(Level1Sp1.transform.position.x + VariationInSpawnPosition(), 5, Level1Sp1.transform.position.z + VariationInSpawnPosition()), Quaternion.identity);
-            Instantiate(scorpian, new Vector3(Level1Sp2.transform.position.x + VariationInSpawnPosition(), 5, Level1Sp2.transform.position.z + VariationInSpawnPosition()), Quaternion.identity);
-            Instantiate(scorpian, new Vector3(Level1Sp3.transform.position.x + VariationInSpawnPosition(), 5, Level1Sp3.transform.position.z + VariationInSpawnPosition()), Quaternion.identity);
+            GameObject e=Instantiate(scorpian, new Vector3(Level1Sp1.transform.position.x + VariationInSpawnPosition(), 5, Level1Sp1.transform.position.z + VariationInSpawnPosition()), Quaternion.identity);
+           
+            GameObject f= Instantiate(scorpian, new Vector3(Level1Sp2.transform.position.x + VariationInSpawnPosition(), 5, Level1Sp2.transform.position.z + VariationInSpawnPosition()), Quaternion.identity);
+            GameObject  g= Instantiate(scorpian, new Vector3(Level1Sp3.transform.position.x + VariationInSpawnPosition(), 5, Level1Sp3.transform.position.z + VariationInSpawnPosition()), Quaternion.identity);
+            enemiesOnField.Add(e);
+            enemiesOnField.Add(f);
+            enemiesOnField.Add(g);
         }
         scorpianSwampAttacks--;
-        if (scorpianSwampAttacks > 0)
+  
+        
+     /*   if (scorpianSwampAttacks > 0)
         {
             StartCoroutine(Level1TimeDelayBetweenS_Swamps());
        
-        }
+        }*/
 
         /*   Vector3 SpawnAreaVector1 = Vector3.zero;
            Vector3 SpawnAreaVector2= Vector3.zero;
@@ -160,6 +184,15 @@ public class Level1EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (enemiesOnField.Count == 0 & scorpianSwampAttacks>0 & isNotLock)
+        {
+            isNotLock = false;
+            StartCoroutine(Level1TimeDelayBetweenS_Swamps());
+            
+        }
+        if (scorpianSwampAttacks <= 0 & enemiesOnField.Count <= 0)
+        {
+            ShieldGrower.Instance.shieldPartActivationDelay *= 1 / 5;
+        }
     }
 }

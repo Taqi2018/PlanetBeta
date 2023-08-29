@@ -18,7 +18,7 @@ public class MainMenuManager : MonoBehaviour
      public GameObject MusicOffButton;
      public GameObject ShopPanel;
      public GameObject LevelPanel;
-     public GameObject LevelPanelPart1;
+     public GameObject instructionPanel;
      public GameObject LevelPanelPart2;
 
 
@@ -106,23 +106,30 @@ public class MainMenuManager : MonoBehaviour
 
      public void LevelPanel1ToLevelPanel2()
      {
-          LevelPanelPart1.SetActive(false);
+          instructionPanel.SetActive(false);
           LevelPanelPart2.SetActive(true);
      }
 
      public void LevelPanel2ToLevelPanel1()
      {
-          LevelPanelPart1.SetActive(true);
+          instructionPanel.SetActive(true);
           LevelPanelPart2.SetActive(false);
      }
 
-     public void LevelToLoadingScene()
+    public void InstructionPanel()
+    {
+        instructionPanel.SetActive(true);
+    }
+
+
+
+    public void LevelToLoadingScene()
      {
-          GameObject currentLevelBtn = EventSystem.current.currentSelectedGameObject.gameObject;
+       /*   GameObject currentLevelBtn = EventSystem.current.currentSelectedGameObject.gameObject;
           string currentLevelText = currentLevelBtn.name;
           int levelValue = Int32.Parse(currentLevelText);
           PlayerPrefs.SetInt("LevelValue", levelValue);
-          Debug.Log("PlayerPrefLevelValue: " + PlayerPrefs.GetInt("LevelValue"));
+          Debug.Log("PlayerPrefLevelValue: " + PlayerPrefs.GetInt("LevelValue"));*/
           SceneManager.LoadScene(1);
      }
 

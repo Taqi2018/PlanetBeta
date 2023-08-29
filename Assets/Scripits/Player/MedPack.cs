@@ -33,10 +33,16 @@ public class MedPack : MonoBehaviour
     }
     public void HealthBooster()
     {
-        if (Player.Instance.health <= 90)
+        if (Player.Instance.health <= 70)
         {
-            Player.Instance.health += 10;
-         
+            Player.Instance.health +=30;
+            Player.Instance.playerHealthBar.SetHealthBar( Player.Instance.health);
+
+        }
+        else
+        {
+            Player.Instance.health = 100;
+            Player.Instance.playerHealthBar.SetHealthBar(Player.Instance.health);
         }
         Destroy(transform.gameObject);
     }

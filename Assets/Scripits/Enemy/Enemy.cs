@@ -53,15 +53,16 @@ public class Enemy : MonoBehaviour
     private bool scorpianAttacking;
     private int onlyAttackShip;
     public bool enemyDead;
-
+    public ParticleSystem scorpianDieEffect;
     public ParticleSystem alienSpawnEffect;
+    private bool isDestructionSound;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-
+        isDestructionSound = false;
         Distance = new List<float>();
       
         health = maxHealth;
@@ -74,7 +75,7 @@ public class Enemy : MonoBehaviour
         moveDir = Ship.Instance.transform.position - transform.position;
         transform.forward = Vector3.Slerp(transform.position, moveDir, 0.0001f);
         onlyAttackShip = UnityEngine.Random.Range(0, 2);
-        Debug.Log(onlyAttackShip + " -->s");
+       
         // ShiedDestructionEvent.Instance.OnDestructionOfLastPart += GameOver;
 
 
@@ -135,7 +136,7 @@ public class Enemy : MonoBehaviour
     private void LoadShips()
     {
         ships = GameObject.FindGameObjectsWithTag("zPoint");
-        Debug.Log(ships[0].transform.parent.GetChild(0).name +" hiiiiiiiiiiiii");
+
      //   Debug.Log(ships[1].transform.parent.GetChild(0).name + " hellllllllo");
 
 
@@ -325,6 +326,7 @@ public class Enemy : MonoBehaviour
     IEnumerator AttackDelay()
     {
         yield return new WaitForSeconds(attackDelay);
+      
         if (transform.name == "Scorpian(Clone)")
         {
             scorpianAttacking = false;
@@ -358,8 +360,11 @@ public class Enemy : MonoBehaviour
     private IEnumerator AllienShootingDelay()
     {
 
-        yield return new WaitForSeconds(UnityEngine.Random.Range(1, 5));
-        Transform bullet = Instantiate(enemyBulletPrefab, alienShootingPoint.position, Quaternion.LookRotation(Player.Instance.transform.position - transform.position, Vector3.up));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1, 3));
+        if (!isAlienDead)
+        {
+            Transform bullet = Instantiate(enemyBulletPrefab, alienShootingPoint.position, Quaternion.LookRotation(Player.Instance.transform.position - transform.position, Vector3.up));
+        }
         /*
                 Rigidbody bulletRigidBody = bullet.GetComponent<Rigidbody>();
                 bulletRigidBody.velocity = shootDir * enemyBulletSpeed;
@@ -444,14 +449,23 @@ public class Enemy : MonoBehaviour
 
             for (int i = 30; i >= 0; i--)
             {
-                Debug.Log(shipSelectedToAttack.transform.parent.GetChild(0).name);
+           
 
                 shipSelectedToAttack.transform.parent.TryGetComponent(out ShieldGrower s);
                GameObject shieldPart= s.activeShieldParts[i];
                 if (shieldPart.activeInHierarchy)
                 {
+                    if (!isDestructionSound)
+                    {
+
+               
+                        isDestructionSound = true;
+                        StartCoroutine(DestructionSound());
+                    }
                     if (shieldPart.name == "Part1")
                     {
+      
+                      
                         GameOverByShieldDestruction();
                     }
                     shieldPart.SetActive(false);
@@ -468,7 +482,15 @@ public class Enemy : MonoBehaviour
 
     }
 
- 
+    private IEnumerator DestructionSound()
+    {
+      //  Debug.Log("sounddddd");
+    //    SoundManager.Instance.Play("shieldDestruction");
+        yield return new WaitForSeconds(1.0f);
+        isDestructionSound = false;
+    }
+
+
     /*
    private void OnTriggerEnter(Collider other)
    {
@@ -510,7 +532,9 @@ public class Enemy : MonoBehaviour
     {
         if (Player.Instance.health <= 0)
         {
+
             Player.Instance.isDieing = true;
+
             Debug.Log("GameOver");
             StartCoroutine(DieAnimationDelay());
         }
@@ -528,6 +552,7 @@ public class Enemy : MonoBehaviour
         GameplayUIManager.Instance.LevelFailedPanel();
     }
 
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out BulletMovement b))
@@ -536,8 +561,19 @@ public class Enemy : MonoBehaviour
             HealthBar.SetHealthBar(health);
             if (health <= 0)
             {
+
                 if (name == "Scorpian" || name == "Scorpian(Clone)")
                 {
+                    if (SceneManager.GetActiveScene().name== "Level1")
+                    {
+                        Level1EnemySpawner.Instance.enemiesOnField.Remove(transform.gameObject);
+                        Level1EnemySpawner.Instance.checkNoEnemyLeftToSpawnNewWave();
+                    }
+                    if (SceneManager.GetActiveScene().name == "Level2" || SceneManager.GetActiveScene().name == "Level3"  || SceneManager.GetActiveScene().name == "Level4" || SceneManager.GetActiveScene().name == "Level5" || SceneManager.GetActiveScene().name == "Level6")
+                    {
+                        Level2EnemySpawner.Instance.enemiesOnField.Remove(transform.gameObject);
+                        Level2EnemySpawner.Instance.checkNoEnemyLeftToSpawnNewWave();
+                    }
                     isScorpianDead = true;
                     transform.GetComponent<BoxCollider>().enabled = false;
                     enemyDead = true;
@@ -548,7 +584,19 @@ public class Enemy : MonoBehaviour
                 }
                 if (name == "Alien" || name == "Alien(Clone)")
                 {
+                    if (SceneManager.GetActiveScene().name == "Level1")
+                    {
+                        Level1EnemySpawner.Instance.enemiesOnField.Remove(transform.gameObject);
+                        Level1EnemySpawner.Instance.checkNoEnemyLeftToSpawnNewWave();
+                    }
+                    if (SceneManager.GetActiveScene().name == "Level2" || SceneManager.GetActiveScene().name == "Level3" || SceneManager.GetActiveScene().name == "Level4" || SceneManager.GetActiveScene().name == "Level5" || SceneManager.GetActiveScene().name == "Level6")
+                    {
+                        Level2EnemySpawner.Instance.enemiesOnField.Remove(transform.gameObject);
+                        Level2EnemySpawner.Instance.checkNoEnemyLeftToSpawnNewWave();
+                    }
                     isAlienDead = true;
+                    transform.GetComponent<BoxCollider>().enabled = false;
+                    enemyDead = true;
                     // Destroy(enemy.gameObject);
                     StopEnemy();
 
@@ -557,9 +605,12 @@ public class Enemy : MonoBehaviour
 
                 if (name == "Drone" || name == "Drone(Clone)")
                 {
+                    Level2EnemySpawner.Instance.enemiesOnField.Remove(transform.gameObject);
+                    Level2EnemySpawner.Instance.checkNoEnemyLeftToSpawnNewWave();
+                    transform.GetComponent<BoxCollider>().enabled = false;
                     isDroneDead = true;
-
-                   // Instantiate(droneHitEffect, transform.position, Quaternion.identity);
+                    enemyDead = true;
+                    // Instantiate(droneHitEffect, transform.position, Quaternion.identity);
                     droneHitEffect.transform.gameObject.SetActive(true);
                     droneHitEffect.Play();
                    // transform.position= Vector3.MoveTowards(other.transform.position, (Vector3.down - other.transform.position)*5,2);
@@ -582,11 +633,18 @@ public class Enemy : MonoBehaviour
         IEnumerator DelayForDeathAnimation()
         {
             TargetRange.Instance.enemies.Remove(transform.gameObject);
+            if (transform.name == "Scorpian" || transform.name == "Scorpian(Clone)")
+            {
+                Instantiate(scorpianDieEffect, transform.position, Quaternion.identity);
+                scorpianDieEffect.gameObject.SetActive(true);
+                scorpianDieEffect.Play();
 
+
+            }
 
             yield return new WaitForSeconds(animationDeathTime);
-
-            if(transform.name=="Drone" || transform.name == "Drone(Clone)")
+  
+            if (transform.name=="Drone" || transform.name == "Drone(Clone)")
             {
                 Debug.Log("dsaojdoasjdpoasjdpoasjdoasjdpoasjdoa");
              droneHitEffect.transform.gameObject.SetActive(false);

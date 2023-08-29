@@ -14,10 +14,13 @@ public class ShieldGrower : MonoBehaviour
     }
     public Transform shieldPartToActivate;
    [SerializeField] GameObject shield;
-    [SerializeField] float shieldPartActivationDelay;
+    [SerializeField] public float shieldPartActivationDelay;
     private int shieldPartNo;
     int totalShieldPartActive;
     public List<GameObject>activeShieldParts;
+    private bool isShieldBooster;
+    public ParticleSystem shieldBoosterParticles;
+
     public int ShieldPartNo()
     {
         return shieldPartNo;
@@ -108,7 +111,39 @@ public class ShieldGrower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (SceneManager.GetActiveScene().name == "Level1")
+        {
+            if (Level1EnemySpawner.Instance.scorpianSwampAttacks <= 0 & Level1EnemySpawner.Instance.enemiesOnField.Count <= 0)
+            {
+                if (!isShieldBooster)
+                {
+                    isShieldBooster = true;
+                    SoundManager.Instance.Play("shieldGrower");
+                    shieldPartActivationDelay *= 1 / 5;
+                    Instantiate(shieldBoosterParticles, transform.position, Quaternion.identity);
+                    shieldBoosterParticles.gameObject.SetActive(true);
+                    shieldBoosterParticles.Play();
 
-        
+                }
+            }
+        }
+        else
+        {
+
+            if (Level2EnemySpawner.Instance.scorpianSwampAttacks <= 0 & Level2EnemySpawner.Instance.enemiesOnField.Count <= 0)
+            {
+                if (!isShieldBooster)
+                {
+                    Debug.Log("Playing it");
+                    isShieldBooster = true;
+                    SoundManager.Instance.Play("shieldGrower");
+                    shieldPartActivationDelay *= 1 / 5;
+                    Instantiate(shieldBoosterParticles, transform.position+Vector3.up*3, Quaternion.identity);
+                    shieldBoosterParticles.gameObject.SetActive(true);
+                    shieldBoosterParticles.Play();
+                }
+            }
+
+        }
     }
 }

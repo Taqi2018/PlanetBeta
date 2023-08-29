@@ -2,19 +2,28 @@ using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 public class Player : MonoBehaviour
 {
 
 
     [SerializeField] public float health;
+    [SerializeField] public float oxygen;
     public HealthBar playerHealthBar;
+    public OxygenBar playerOxBar;
     
+    public float oxygenDamage;
     public float maxHealth;
+    public Image messanger;
+    public TextMeshProUGUI oxygenInstruction;
+    public TextMeshProUGUI healthInstruction;
+    public TextMeshProUGUI ammoInstruction;
 
 
-
-
+    public bool giveHealthNews;
+    public bool giveAmmoNews;
 
 
     public static Player Instance { private set; get; }
@@ -25,6 +34,7 @@ public class Player : MonoBehaviour
     Vector3 moveDir;
     [SerializeField] float playerSpeed, playerRotationSpeed;
     private bool isPlayerCollide;
+    private bool givingOxygenCoreInstruction;
 
     private void Awake()
     {
@@ -36,18 +46,57 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        giveHealthNews = false;
         health = maxHealth;
+        oxygen = 100;
+        givingOxygenCoreInstruction = true;
+        giveAmmoNews = false;
 
 
-
-     EventGenrator.Instance.OnPlayerWalking += ActionOnPlayerWalkingEvent;
+        EventGenrator.Instance.OnPlayerWalking += ActionOnPlayerWalkingEvent;
         TargetRange.Instance.OnEnemyInTarget += ActionOnEnemyTargetEvent;
    
 
        isWalking = false;
        isPlayerSelected = false;
+        StartCoroutine(Oxygen());
     }
 
+    private IEnumerator Oxygen()
+    {
+        yield return new WaitForSeconds(3.0F);
+        oxygen -= oxygenDamage;
+        playerOxBar.SetOxygenBar(oxygen);
+        if (oxygen <= 50  && SceneManager.GetActiveScene().name == "Level1")
+        {
+      
+           
+            if (givingOxygenCoreInstruction)
+            {
+                givingOxygenCoreInstruction = false;
+
+                GameplayUIManager.Instance.joystickCanvaus.gameObject.SetActive(false);
+                GameplayUIManager.Instance.gunPanel.gameObject.SetActive(false);
+                Time.timeScale = 0;
+                messanger.gameObject.SetActive(true);
+                oxygenInstruction.gameObject.SetActive(true);
+
+
+
+            }
+
+        }
+        if (oxygen <= 0)
+        {
+            GameplayUIManager.Instance.LevelFailedPanel();
+
+        }
+        else
+        {
+            StartCoroutine(Oxygen());
+        }
+       
+    }
 
     private void ActionOnPlayerWalkingEvent(object sender, EventGenrator.OnPlayerWalkingEventArgs e)
     {
@@ -85,7 +134,7 @@ public class Player : MonoBehaviour
 
        if (canMove)
         {
-            if (isWalking)
+            if (isWalking & !isDieing)
             {
                 Walking();
             }
